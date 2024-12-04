@@ -1,0 +1,52 @@
+<view class="page-wrapper">
+  <view class="container">
+    <view class="poll-header">
+      <view class="poll-title">创建投票</view>
+    </view>
+
+    <view class="poll-content">
+      <view class="form-group">
+        <view class="form-label">投票标题</view>
+        <view class="input-box">
+          <input 
+            class="title-input" 
+            placeholder="请输入投票标题" 
+            value="{{title}}"
+            bindinput="onTitleInput"
+          />
+        </view>
+      </view>
+
+      <view class="form-group">
+        <view class="form-label">投票选项</view>
+        <view class="options-list">
+          <block wx:for="{{options}}" wx:key="index">
+            <view class="option-item">
+              <input 
+                class="option-input"
+                placeholder="请输入选项{{index + 1}}"
+                value="{{item}}"
+                data-index="{{index}}"
+                bindinput="onOptionInput"
+              />
+              <view 
+                class="delete-option" 
+                data-index="{{index}}" 
+                bindtap="removeOption"
+                wx:if="{{options.length > 2 && index < options.length - 1}}"
+              >×</view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+
+    <view class="btn-container">
+      <button 
+        class="submit-btn {{!canSubmit ? 'disabled' : ''}}" 
+        bindtap="createPoll"
+        disabled="{{!canSubmit}}"
+      >发起投票</button>
+    </view>
+  </view>
+</view>

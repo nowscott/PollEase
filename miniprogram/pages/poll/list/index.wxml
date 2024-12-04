@@ -1,0 +1,72 @@
+<view class="container">
+  <scroll-view scroll-y class="poll-list">
+    <block wx:if="{{loading}}">
+      <view class="loading">加载中...</view>
+    </block>
+
+    <block wx:elif="{{error}}">
+      <view class="error">{{error}}</view>
+      <button bindtap="fetchPollList" class="retry-btn">重新加载</button>
+    </block>
+
+    <block wx:elif="{{pollList && pollList.length}}">
+      <view 
+        wx:for="{{pollList}}" 
+        wx:key="_id"
+        class="poll-item-container"
+      >
+        <movable-area class="movable-area">
+          <movable-view 
+            class="movable-view"
+            direction="horizontal"
+            damping="15"
+            friction="2"
+            out-of-bounds="{{true}}"
+            x="{{item.xMove}}"
+            inertia="true"
+            data-index="{{index}}"
+            bindtouchstart="handleTouchStart"
+            bindtouchmove="handleTouchMove"
+            bindtouchend="handleTouchEnd"
+            bindchange="onMovableChange"
+          >
+            <view class="content-wrapper">
+              <view 
+                class="poll-item"
+                catch:tap="goToPollDetail"
+                data-poll-id="{{item._id}}"
+                hover-class="poll-item-hover"
+              >
+                <text class="poll-title">{{item.title}}</text>
+                <view class="poll-info">
+                  <text class="poll-time">截止时间：{{item.endTimeStr}}</text>
+                  <text class="poll-count">{{item.totalVotes}}票</text>
+                </view>
+              </view>
+              <view 
+                class="delete-btn"
+                data-id="{{item._id}}"
+                data-index="{{index}}"
+                catch:tap="handleDelete"
+              >删除</view>
+            </view>
+          </movable-view>
+        </movable-area>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="empty">
+        <text>暂无投票，点击下方按钮创建</text>
+      </view>
+    </block>
+  </scroll-view>
+
+  <view class="btn-container">
+    <button 
+      class="submit-btn" 
+      hover-class="button-hover" 
+      bindtap="goToCreate"
+    >新建投票</button>
+  </view>
+</view>
