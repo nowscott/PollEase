@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: var(--notion-white);
+  background-color: var(--notion-bg);
 }
 
 /* 列表区域 */
@@ -19,7 +19,7 @@
 .poll-item-container {
   padding: 0;
   margin: 0;
-  background-color: var(--notion-white);
+  background-color: var(--notion-bg);
   width: 100%;
   border-bottom: 1rpx solid var(--notion-border);
 }
@@ -28,7 +28,7 @@
   width: 100%;
   height: 160rpx;
   position: relative;
-  background: #fff;
+  background: var(--color-error);
   overflow: hidden;
 }
 
@@ -36,6 +36,7 @@
   width: calc(100% + 160rpx);
   height: 160rpx;
   z-index: 2;
+  background: var(--notion-white);
 }
 
 /* 新增内容包装器样式 */
@@ -43,7 +44,7 @@
   display: flex;
   width: 100%;
   height: 100%;
-  transform: translateX(1rpx);
+  background: var(--notion-white);
 }
 
 /* 投票项主体内容 */
@@ -54,11 +55,6 @@
   padding: 24rpx 32rpx;
   box-sizing: border-box;
   background: var(--notion-white);
-}
-
-.poll-item:hover {
-  background-color: var(--notion-hover);
-  transform: scale(0.98);
 }
 
 .poll-title {
@@ -117,7 +113,7 @@
 /* 底部按钮容器 */
 .btn-container {
   padding: 32rpx 48rpx 48rpx;
-  background: var(--notion-white);
+  background: var(--notion-bg);
 }
 
 .submit-btn {

@@ -5,9 +5,9 @@
     "pages/poll/detail/index"
   ],
   "window": {
-    "backgroundColor": "#F7F6F3",
+    "backgroundColor": "#f7f6f3",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F7F6F3",
+    "navigationBarBackgroundColor": "#f7f6f3",
     "navigationBarTitleText": "投一下",
     "navigationBarTextStyle": "black"
   },

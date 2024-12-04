@@ -1,3 +1,5 @@
 {
-  "usingComponents": {}
+  "usingComponents": {},
+  "transitionType": "slide-in-bottom",
+  "transitionDuration": 300
 }

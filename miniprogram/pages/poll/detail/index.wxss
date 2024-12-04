@@ -77,7 +77,7 @@
 }
 
 .option {
-  background: var(--notion-bg);
+  background: var(--notion-white);
   padding: 24rpx;
   border: 2rpx solid var(--notion-border);
   border-radius: 20rpx;

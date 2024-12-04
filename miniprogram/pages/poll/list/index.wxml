@@ -35,7 +35,6 @@
                 class="poll-item"
                 catch:tap="goToPollDetail"
                 data-poll-id="{{item._id}}"
-                hover-class="poll-item-hover"
               >
                 <text class="poll-title">{{item.title}}</text>
                 <view class="poll-info">

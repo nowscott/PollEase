@@ -171,7 +171,7 @@ Page({
 
   // 跳转到创建投票页面
   goToCreate() {
-    wx.navigateTo({
+    wx.redirectTo({
       url: '/pages/poll/create/index'
     })
   },
@@ -179,7 +179,7 @@ Page({
   // 跳转到投票详情页面
   goToPollDetail(e) {
     const pollId = e.currentTarget.dataset.pollId
-    wx.navigateTo({
+    wx.redirectTo({
       url: `/pages/poll/detail/index?pollId=${pollId}`
     })
   },
