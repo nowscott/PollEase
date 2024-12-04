@@ -21,7 +21,7 @@
   margin: 0;
   background-color: var(--notion-bg);
   width: 100%;
-  border-top: 1rpx solid var(--notion-border);
+  border-bottom: 1rpx solid var(--notion-border);
 }
 
 .movable-area {
@@ -154,4 +154,9 @@
 
 .submit-btn:active {
   background: var(--color-warning-hover);
+}
+
+/* 第一个投票项容器添加上边框 */
+.poll-item-container:first-child {
+  border-top: 1rpx solid var(--notion-border);
 }

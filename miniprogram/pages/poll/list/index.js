@@ -27,7 +27,10 @@ Page({
   },
 
   onPullDownRefresh() {
-    this.fetchPollList()
+    // 添加延迟以提供更好的视觉反馈
+    setTimeout(() => {
+      this.fetchPollList()
+    }, 500)
   },
 
   // 获取用户信息
@@ -54,11 +57,7 @@ Page({
   async fetchPollList() {
     if (!this.data.openid) return
 
-    this.setData({ 
-      loading: true,
-      error: null
-    })
-
+    // 不再立即设置 loading 状态，保持当前列表显示
     try {
       const db = wx.cloud.database()
       const { data } = await db.collection('polls')
@@ -75,19 +74,35 @@ Page({
             poll.votes.reduce((a, b) => a + b, 0) : 
             Object.values(poll.votes).reduce((a, b) => a + b, 0)) : 0,
         endTimeStr: this.formatDate(poll.endTime),
-        xMove: 0
+        xMove: 0,
+        deleteWidth: this.data.deleteWidth
       }))
 
+      // 数据准备好后再一次性更新
       this.setData({
         pollList,
-        loading: false
+        loading: false,
+        error: null
       })
+
+      wx.showToast({
+        title: '刷新成功',
+        icon: 'success',
+        duration: 1000
+      })
+
     } catch (err) {
       this.setData({
-        loading: false,
         error: '获取列表失败'
       })
+      wx.showToast({
+        title: '刷新失败',
+        icon: 'error',
+        duration: 1000
+      })
     } finally {
+      // 移除 loading 状态
+      this.setData({ loading: false })
       wx.stopPullDownRefresh()
     }
   },
@@ -136,7 +151,7 @@ Page({
     const { pollList } = this.data
     const item = pollList[index]
     
-    // 重置删除按钮宽度
+    // 重���删除按钮宽度
     pollList[index].deleteWidth = this.data.deleteWidth
     
     // 如果滑动距离超过删除按钮宽度的1.4倍，触发删除操作
