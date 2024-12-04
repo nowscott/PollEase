@@ -100,7 +100,7 @@ Page({
     const deltaX = moveX - this.data.touchStartX
     const index = this.data.activeIndex
     
-    let xMove = Math.max(-this.data.deleteWidth, Math.min(0, deltaX))
+    let xMove = Math.max(-this.data.deleteWidth, Math.min(-100, deltaX))
     
     const pollList = [...this.data.pollList]
     pollList[index].xMove = xMove
@@ -115,9 +115,16 @@ Page({
     const { pollList } = this.data
     const item = pollList[index]
     
-    // 降低触发阈值，让滑动更容易展开
+    // 如果是右滑，直接回到初始位置
+    if (item.xMove > -this.data.deleteWidth) {
+      this.updateItemMove(index, 0)
+      this.setData({ activeIndex: null })
+      return
+    }
+    
+    // 左滑的逻辑保持不变
     let xMove = 0
-    if (Math.abs(item.xMove) >= this.data.deleteWidth / 3) { // 改为三分之一
+    if (Math.abs(item.xMove) >= this.data.deleteWidth / 3) {
       xMove = -this.data.deleteWidth
     }
     

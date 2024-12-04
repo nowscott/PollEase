@@ -33,17 +33,20 @@
 }
 
 .movable-view {
-  width: calc(100% + 160rpx);
+  width: calc(100% + 320rpx);
   height: 160rpx;
   z-index: 2;
+  margin-left: -160rpx;
   background: var(--notion-white);
 }
 
 /* 新增内容包装器样式 */
 .content-wrapper {
   display: flex;
-  width: 100%;
+  width: calc(100% - 160rpx);
+  margin-left: 160rpx;
   height: 100%;
+  transform: translateX(1rpx);
   background: var(--notion-white);
 }
 
