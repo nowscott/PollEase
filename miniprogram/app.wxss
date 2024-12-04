@@ -1,12 +1,22 @@
 /**app.wxss**/
 page {
-  /* Notion 风格的颜色变量 */
+  /* Notion 风格的基础颜色变量 */
   --notion-white: #ffffff;
   --notion-bg: #f7f6f3;
   --notion-text: #37352f;
   --notion-text-light: #787774;
   --notion-border: #e6e6e6;
   --notion-hover: #f1f1ef;
+  
+  /* 扩展的颜色变量 */
+  --color-error: #ff4d4f;
+  --color-success: #52c41a;
+  --color-warning: #fff9e6;
+  --color-warning-hover: #fff3cc;
+  --color-disabled: #f5f5f5;
+  --color-disabled-text: #999;
+  --color-border-light: #f0f0f0;
+  --color-background-light: #000;
   
   /* 全局背景色和文字颜色 */
   background: var(--notion-bg);

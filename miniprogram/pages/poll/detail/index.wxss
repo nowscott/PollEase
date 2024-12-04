@@ -1,9 +1,9 @@
 /* pages/poll/detail/index.wxss */
 
 .page-wrapper {
-  background-color: #fafafa;
+  background-color: var(--notion-bg);
   min-height: 100vh;
-  color: #37352f;
+  color: var(--notion-text);
 }
 
 .container {
@@ -17,7 +17,7 @@
 .poll-header {
   margin: 0;
   padding: 60rpx 48rpx 48rpx;
-  background: #fff;
+  background: var(--notion);
   width: 100%;
   box-sizing: border-box;
 }
@@ -25,7 +25,7 @@
 .poll-title {
   font-size: 48rpx;
   font-weight: 600;
-  color: #37352f;
+  color: var(--notion-text);
   margin-bottom: 24rpx;
   line-height: 1.3;
   letter-spacing: -0.02em;
@@ -33,7 +33,7 @@
 
 .poll-meta {
   font-size: 24rpx;
-  color: #787774;
+  color: var(--notion-text-light);
   display: flex;
   flex-direction: column;
   gap: 8rpx;
@@ -41,7 +41,7 @@
 
 /* 投票内容区域 */
 .poll-content {
-  background: #fff;
+  background: var(--notion-b g);
   margin: 0;
   width: 100%;
   padding: 24rpx 0;
@@ -60,15 +60,12 @@
   display: inline-flex;
   align-items: center;
   padding: 4rpx 12rpx;
-  border: 2px solid #d1d3d4;
+  border: 2rpx solid var(--notion-border);
   border-radius: 8rpx;
   font-size: 24rpx;
   font-weight: 500;
-}
-
-.expired-tag, .voted-tag {
-  background: #fff9e6;
-  color: #666;
+  background: var(--color-warning);
+  color: var(--notion-text-light);
 }
 
 /* 选项样式 */
@@ -80,9 +77,9 @@
 }
 
 .option {
-  background: #ffffff;
+  background: var(--notion-bg);
   padding: 24rpx;
-  border: 2rpx solid #d1d3d4;
+  border: 2rpx solid var(--notion-border);
   border-radius: 20rpx;
   position: relative;
   overflow: hidden;
@@ -92,8 +89,7 @@
 }
 
 .option.can-vote:active {
-  background: #f7f7f7;
-  border-color: #d1d3d4;
+  background: var(--notion-hover);
 }
 
 .option-content {
@@ -108,7 +104,7 @@
 
 .option-text {
   font-size: 28rpx;
-  color: #37352f;
+  color: var(--notion-text);
   flex: 1;
   margin-right: 32rpx;
   line-height: 1.5;
@@ -125,13 +121,13 @@
 
 .vote-count {
   font-size: 28rpx;
-  color: #37352f;
+  color: var(--notion-text);
   font-weight: 400;
 }
 
 .vote-percentage {
   font-size: 28rpx;
-  color: #787774;
+  color: var(--notion-text-light);
   font-weight: 400;
 }
 
@@ -139,7 +135,7 @@
 .loading, .error {
   text-align: center;
   padding: 60rpx 40rpx;
-  color: #787774;
+  color: var(--notion-text-light);
   font-size: 28rpx;
 }
 
@@ -149,18 +145,18 @@
 
 .retry-btn {
   margin-top: 24rpx;
-  background: #ffffff;
-  border: 2rpx solid #d1d3d4;
-  color: #37352f;
+  background: var(--notion-bg);
+  border: 2rpx solid var(--notion-border);
+  color: var(--notion-text);
   font-size: 28rpx;
   padding: 12rpx 24rpx;
-  border-radius: 4rpx;
+  border-radius: 8rpx;
 }
 
 /* 分享按钮 */
 .share-section {
   padding: 24rpx 32rpx 48rpx;
-  background: #fafafa;
+  background: var(--notion-bg);
 }
 
 .share-btn {
@@ -168,12 +164,12 @@
   margin: 0 auto;
   height: 80rpx;
   line-height: 80rpx;
-  border-radius: 12rpx;
-  background: #fff9e6;
-  color: #37352f;
+  border-radius: 20rpx;
+  background: var(--color-warning);
+  color: var(--notion-text);
   font-size: 28rpx;
   font-weight: 500;
-  border: 2rpx solid #d1d3d4;
+  border: 2rpx solid var(--notion-border);
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
@@ -185,5 +181,5 @@
 }
 
 .share-btn:active {
-  background: #fff3cc;
+  background: var(--color-warning-hover);
 }

@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #fff;
+  background-color: var(--notion-white);
 }
 
 /* 列表区域 */
@@ -19,9 +19,9 @@
 .poll-item-container {
   padding: 0;
   margin: 0;
-  background-color: #fff;
+  background-color: var(--notion-white);
   width: 100%;
-  border-bottom: 1rpx solid #e0e0e0;
+  border-bottom: 1rpx solid var(--notion-border);
 }
 
 .movable-area {
@@ -53,17 +53,17 @@
   height: 160rpx;
   padding: 24rpx 32rpx;
   box-sizing: border-box;
-  background: #fff;
+  background: var(--notion-white);
 }
 
 .poll-item:hover {
-  background-color: #f9f9f9;
+  background-color: var(--notion-hover);
   transform: scale(0.98);
 }
 
 .poll-title {
   font-size: 32rpx;
-  color: #333;
+  color: var(--notion-text);
   margin-bottom: 16rpx;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -76,15 +76,15 @@
   justify-content: space-between;
   align-items: center;
   font-size: 24rpx;
-  color: #666;
+  color: var(--notion-text-light);
 }
 
 /* 删除按钮 */
 .delete-btn {
   width: 160rpx;
   height: 160rpx;
-  background: #ff4d4f;
-  color: #fff;
+  background: var(--color-error);
+  color: var(--notion-white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,46 +95,45 @@
 /* 空状态和错误状态 */
 .empty, .error {
   text-align: center;
-  color: #999;
+  color: var(--notion-text-light);
   padding: 40rpx;
   font-size: 28rpx;
 }
 
 .loading {
   text-align: center;
-  color: #999;
+  color: var(--notion-text-light);
   padding: 40rpx;
 }
 
 .retry-btn {
-  background-color: #fff9e6;
-  color: #666;
+  background-color: var(--color-warning);
+  color: var(--notion-text);
   margin-top: 20rpx;
-  border: 2rpx solid #d1d3d4;
+  border: 2rpx solid var(--notion-border);
   border-radius: 20rpx;
 }
 
 /* 底部按钮容器 */
 .btn-container {
   padding: 32rpx 48rpx 48rpx;
-  background: #fff;
-  border-top: 2rpx solid #f0f0f0;
+  background: var(--notion-white);
 }
 
 .submit-btn {
   width: 100%;
   height: 88rpx;
-  background: #fff9e6;
-  color: #37352f;
+  background: var(--color-warning);
+  color: var(--notion-text);
   font-size: 32rpx;
   font-weight: 500;
   border-radius: 20rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2rpx solid #d1d3d4;
+  border: 2rpx solid var(--notion-border);
 }
 
 .submit-btn:active {
-  background: #fff3cc;
+  background: var(--color-warning-hover);
 }
