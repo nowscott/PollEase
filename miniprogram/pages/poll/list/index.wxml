@@ -21,9 +21,9 @@
             direction="horizontal"
             damping="15"
             friction="2"
-            out-of-bounds="{{true}}"
+            out-of-bounds="{{false}}"
             x="{{item.xMove}}"
-            inertia="true"
+            inertia="{{false}}"
             data-index="{{index}}"
             bindtouchstart="handleTouchStart"
             bindtouchmove="handleTouchMove"
@@ -43,11 +43,12 @@
                 </view>
               </view>
               <view 
-                class="delete-btn"
+                class="delete-btn {{item.deleteWidth > deleteWidth * 2 ? 'will-delete' : (item.deleteWidth > deleteWidth ? 'stretching' : '')}}"
+                style="width: {{item.deleteWidth}}rpx"
                 data-id="{{item._id}}"
                 data-index="{{index}}"
                 catch:tap="handleDelete"
-              >删除</view>
+              >{{item.deleteWidth > deleteWidth * 2 ? '释放立即删除' : '删除'}}</view>
             </view>
           </movable-view>
         </movable-area>

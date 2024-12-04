@@ -100,10 +100,31 @@ Page({
     const deltaX = moveX - this.data.touchStartX
     const index = this.data.activeIndex
     
-    let xMove = Math.max(-this.data.deleteWidth, Math.min(-100, deltaX))
+    // 计算滑动距离和删除按钮宽度
+    const baseWidth = this.data.deleteWidth
+    let xMove = 0
+    let deleteWidth = baseWidth
+    
+    if (deltaX < 0) {
+      const absMove = Math.abs(deltaX)
+      if (absMove <= baseWidth) {
+        // 正常滑动范围内
+        xMove = deltaX
+        deleteWidth = baseWidth
+      } else if (absMove <= baseWidth * 1.2) {
+        // 超出范围，拉伸删除按钮
+        xMove = -absMove
+        deleteWidth = absMove
+      } else {
+        // 限制最大值
+        xMove = -baseWidth * 4
+        deleteWidth = baseWidth * 4
+      }
+    }
     
     const pollList = [...this.data.pollList]
     pollList[index].xMove = xMove
+    pollList[index].deleteWidth = deleteWidth
     
     this.setData({ pollList })
   },
@@ -115,14 +136,17 @@ Page({
     const { pollList } = this.data
     const item = pollList[index]
     
-    // 如果是右滑，直接回到初始位置
-    if (item.xMove > -this.data.deleteWidth) {
-      this.updateItemMove(index, 0)
-      this.setData({ activeIndex: null })
+    // 重置删除按钮宽度
+    pollList[index].deleteWidth = this.data.deleteWidth
+    
+    // 如果滑动距离超过删除按钮宽度的1.4倍，触发删除操作
+    if (Math.abs(item.xMove) > this.data.deleteWidth * 2.4) {
+      const pollId = item._id
+      this.deletePoll(pollId)
       return
     }
     
-    // 左滑的逻辑保持不变
+    // 普通左滑逻辑
     let xMove = 0
     if (Math.abs(item.xMove) >= this.data.deleteWidth / 3) {
       xMove = -this.data.deleteWidth
