@@ -27,6 +27,15 @@ Component({
   },
 
   methods: {
+    // 立即从缓存加载数据
+    loadFromCache() {
+      const cache = this.getCache()
+      this.triggerEvent('cacheUpdate', {
+        data: cache.data || []
+      })
+      return cache.data || []
+    },
+
     startAutoSync() {
       // 改为1分钟同步一次
       const timer = setInterval(() => {
@@ -44,13 +53,11 @@ Component({
     async sync() {
       try {
         if (!this.properties.openid) {
-          console.warn('同步失败: openid 为空')
+          console.log('同步失败: openid 为空')
           return false
         }
 
         const db = wx.cloud.database()
-        
-        console.log('开始同步，openid:', this.properties.openid)
         
         // 获取服务器数据
         const { data } = await db.collection('polls')
@@ -61,12 +68,10 @@ Component({
           .limit(20)
           .get()
 
-        console.log('数据库查询结果:', data)
-        
         // 直接使用服务器返回的数据更新缓存
         this.updateCache(data)
         
-        console.log('同步完成，当前缓存数据数量:', data.length)
+        console.log('同步完成')
         return true
       } catch (err) {
         console.error('同步失败:', err)
@@ -81,15 +86,9 @@ Component({
     },
 
     updateCache(newData) {
-      console.log('准备更新缓存，新数据:', newData)
-      
       wx.setStorageSync('pollStorage', {
         data: newData
       })
-      
-      // 验证是否写入成功
-      const cache = wx.getStorageSync('pollStorage')
-      console.log('缓存更新后的数据:', cache)
       
       this.triggerEvent('cacheUpdate', {
         data: newData

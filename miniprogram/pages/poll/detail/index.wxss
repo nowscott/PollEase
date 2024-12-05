@@ -207,3 +207,45 @@
     border-color: var(--notion-border);
   }
 }
+
+.description {
+  font-size: 28rpx;
+  color: #666;
+  margin: 20rpx 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+.poll-info {
+  padding: 10rpx 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.voter-count {
+  font-size: 28rpx;
+  color: #666;
+  margin-top: 10rpx;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40rpx;
+}
+
+.auth-btn {
+  width: 80%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #07c160;
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  border: none;
+}
+
+.auth-btn::after {
+  border: none;
+}

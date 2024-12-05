@@ -6,7 +6,8 @@ Page({
     pollOptions: ['', ''],
     templateId: null,
     templateData: null,
-    endTime: null
+    description: '',
+    openid: ''
   },
 
   onLoad(options) {
@@ -15,18 +16,44 @@ Page({
       this.loadTemplateData(templateId)
     }
 
-    // 获取事件通道
-    const eventChannel = this.getOpenerEventChannel()
-    eventChannel.on('setTemplate', template => {
-      if (template) {
-        const options = [...template.options, '']
-        this.setData({
-          title: template.title,
-          options: options
-        })
-        this.checkCanSubmit()
+    // 获取事件通道，需要判断是否存在
+    const eventChannel = this.getOpenerEventChannel && this.getOpenerEventChannel()
+    if (eventChannel) {
+      eventChannel.on('setTemplate', template => {
+        if (template) {
+          const options = [...template.options, '']
+          this.setData({
+            title: template.title,
+            description: template.description || '',
+            options: options
+          })
+          this.checkCanSubmit()
+        }
+      })
+    }
+
+    // 获取用户 openid
+    this.getUserInfo()
+  },
+
+  async getUserInfo() {
+    try {
+      const { result } = await wx.cloud.callFunction({
+        name: 'getOpenid'
+      })
+      
+      if (!result || !result.openid) {
+        throw new Error('无法获取用户标识')
       }
-    })
+
+      this.setData({ openid: result.openid })
+    } catch (err) {
+      console.error('获取用户信息失败:', err)
+      wx.showToast({
+        title: '获取用户信息失败',
+        icon: 'none'
+      })
+    }
   },
 
   async loadTemplateData(templateId) {
@@ -41,6 +68,7 @@ Page({
 
       this.setData({
         title: data.title,
+        description: data.description || '',
         options: data.options,
         templateId: templateId,
         templateData: data
@@ -108,8 +136,16 @@ Page({
 
   async createPoll() {
     if (!this.data.canSubmit) return
+    if (!this.data.openid) {
+      wx.showToast({
+        title: '请稍后重试',
+        icon: 'none'
+      })
+      return
+    }
 
     const title = this.data.title.trim()
+    const description = this.data.description.trim()
     const options = this.data.options.filter(opt => opt.trim().length > 0)
 
     if (options.length < 2) {
@@ -127,15 +163,19 @@ Page({
 
     try {
       const db = wx.cloud.database()
+      const pollData = {
+        title,
+        description,
+        options,
+        creatorId: this.data.openid,
+        createTime: db.serverDate(),
+        endTime: db.serverDate({ offset: 24 * 60 * 60 * 1000 }), // 24小时后结束
+        voters: [],
+        votes: {}
+      }
+
       const result = await db.collection('polls').add({
-        data: {
-          title,
-          options,
-          createTime: Date.now(),
-          endTime: Date.now() + 24 * 60 * 60 * 1000, // 24小时后结束
-          votes: {},  // 初始化空的投票记录
-          voters: []  // 初始化空的投票者列表
-        }
+        data: pollData
       })
 
       wx.hideLoading()
@@ -153,12 +193,13 @@ Page({
             const newPoll = {
               _id: result._id,
               title,
+              description,
               options,
               createTime: Date.now(),
-              endTime: Date.now() + 24 * 60 * 60 * 1000,
+              endTime: Date.now() + 24 * 60 * 60 * 1000,  // 使用本地时间计算
               votes: {},
               voters: [],
-              _openid: listPage.data.openid
+              _openid: this.data.openid  // 在缓存中可以使用 _openid
             }
             pollStorage.addToCache(newPoll)
           }
@@ -178,12 +219,19 @@ Page({
         }, 1500)
       }
     } catch (err) {
+      console.error('创建投票失败:', err)  // 添加错误日志
       wx.hideLoading()
       wx.showModal({
         title: '创建失败',
-        content: '请稍后重试',
+        content: err.message || '请稍后重试',  // 显示具体错误信息
         showCancel: false
       })
     }
+  },
+
+  onDescriptionInput(e) {
+    this.setData({
+      description: e.detail.value
+    })
   }
 })

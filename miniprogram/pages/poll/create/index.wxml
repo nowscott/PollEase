@@ -18,6 +18,18 @@
       </view>
 
       <view class="form-group">
+        <view class="form-label">投票描述</view>
+        <view class="input-box">
+          <textarea 
+            class="textarea" 
+            placeholder="请输入投票描述（选填）" 
+            value="{{description}}" 
+            bindinput="onDescriptionInput"
+          />
+        </view>
+      </view>
+
+      <view class="form-group">
         <view class="form-label">投票选项</view>
         <view class="options-list">
           <block wx:for="{{options}}" wx:key="index">

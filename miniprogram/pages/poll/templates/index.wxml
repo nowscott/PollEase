@@ -13,9 +13,9 @@
             hover-class="template-item-hover">
         <view class="template-content">
           <view class="template-header">
-            <view class="template-title">{{item.title}}</view>
+            <view class="template-title">{{item.template.title}}</view>
           </view>
-          <view class="template-desc">{{item.description}}</view>
+          <view class="template-desc">{{item.template.description}}</view>
           <view class="template-options">
             <view class="template-option" 
                   wx:for="{{item.template.options}}" 

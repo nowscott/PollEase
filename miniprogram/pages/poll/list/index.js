@@ -4,7 +4,7 @@ const app = getApp()
 Page({
   data: {
     pollList: [],
-    loading: true,
+    loading: false,
     error: null,
     openid: '',
     deleteWidth: 160,
@@ -15,7 +15,12 @@ Page({
 
   onLoad() {
     this.getUserInfo().then(() => {
-      this.fetchPollList()
+      const pollStorage = this.selectComponent('#pollStorage')
+      if (pollStorage) {
+        const cacheData = pollStorage.loadFromCache()
+        this.processPollData(cacheData)
+      }
+      this.fetchPollList(true)
     })
   },
 
@@ -50,47 +55,29 @@ Page({
   },
 
   // 获取投票列表
-  async fetchPollList() {
-    console.log('list page: fetching poll list, openid:', this.data.openid)
+  async fetchPollList(silent = false) {
     if (!this.data.openid) return
 
-    this.setData({ loading: true })
+    if (!silent) {
+      this.setData({ loading: true })
+    }
 
     const pollStorage = this.selectComponent('#pollStorage')
-    console.log('list page: poll-storage component:', pollStorage)
     
     if (!pollStorage) {
-      console.error('list page: poll-storage component not found')
+      console.error('poll-storage 组件未找到')
       this.setData({ loading: false })
       return
     }
 
     try {
-      console.log('list page: starting sync')
       await pollStorage.sync()
       
       const cache = pollStorage.getCache()
-      console.log('list page: got cache:', cache)
-      
-      const pollList = (cache.data || []).map(poll => ({
-        ...poll,
-        totalVotes: poll.votes ? 
-          Object.values(poll.votes).reduce((a, b) => a + b, 0) : 0,
-        endTimeStr: this.formatDate(poll.endTime),
-        xMove: 0,
-        deleteWidth: this.data.deleteWidth
-      }))
-
-      console.log('list page: processed poll list:', pollList)
-
-      this.setData({
-        pollList,
-        loading: false,
-        error: null
-      })
+      this.processPollData(cache.data)
 
     } catch (err) {
-      console.error('list page: fetch failed:', err)
+      console.error('获取列表失败:', err)
       this.handleError('获取列表失败', err)
       this.setData({ loading: false })
     }
@@ -281,7 +268,6 @@ Page({
 
   // 添加缓存更新的处理方法
   onCacheUpdate(e) {
-    console.log('list page: cache update event:', e.detail)
     const { data } = e.detail
     const pollList = data.map(poll => ({
       ...poll,
@@ -292,13 +278,30 @@ Page({
       deleteWidth: this.data.deleteWidth
     }))
 
-    console.log('list page: updating poll list:', pollList)
     this.setData({ pollList })
   },
 
   goToTemplates() {
     wx.navigateTo({
       url: '/pages/poll/templates/index'
+    })
+  },
+
+  // 处理投票数据的公共方法
+  processPollData(data) {
+    const pollList = (data || []).map(poll => ({
+      ...poll,
+      totalVotes: poll.votes ? 
+        Object.values(poll.votes).reduce((a, b) => a + b, 0) : 0,
+      endTimeStr: this.formatDate(poll.endTime),
+      xMove: 0,
+      deleteWidth: this.data.deleteWidth
+    }))
+
+    this.setData({
+      pollList,
+      loading: false,
+      error: null
     })
   }
 })

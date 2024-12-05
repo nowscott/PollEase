@@ -36,5 +36,6 @@
     "tabSize": 2
   },
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
-  "checkSiteMap": false
+  "checkSiteMap": false,
+  "cloud": true
 }

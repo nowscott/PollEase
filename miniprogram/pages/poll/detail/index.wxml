@@ -3,6 +3,7 @@
   <view class="container">
     <view class="poll-header">
       <view class="poll-title">{{poll.title}}</view>
+      <view class="description" wx:if="{{poll.description}}">{{poll.description}}</view>
       <view class="poll-meta">
         <text class="meta-item">创建时间：{{poll.createTimeStr}}</text>
         <text class="meta-item">截止时间：{{poll.endTimeStr}}</text>
@@ -56,6 +57,24 @@
           邀请好友投票
         </button>
       </view>
+
+      <view class="poll-info">
+        <view class="voter-count">
+          已有 {{poll.voterCount || 0}} 人参与投票
+        </view>
+      </view>
+    </block>
+
+    <block wx:if="{{needAuth}}">
+      <view class="auth-container">
+        <button class="auth-btn" bindtap="reauthorize">
+          授权参与投票
+        </button>
+      </view>
+    </block>
+
+    <block wx:else>
+      <!-- 原有的投票内容 -->
     </block>
   </view>
 </view>

@@ -197,3 +197,22 @@
     background: var(--color-warning-hover);
   }
 }
+
+.textarea {
+  width: 100%;
+  height: 120rpx;
+  background: var(--notion-white);
+  border-radius: 20rpx;
+  padding: 24rpx;
+  font-size: var(--font-medium);
+  color: var(--notion-text);
+  box-sizing: border-box;
+  border: 2rpx solid var(--notion-border);
+}
+
+/* 调整深色模式下的样式 */
+@media (prefers-color-scheme: dark) {
+  .textarea:focus {
+    border-color: var(--notion-text-light);
+  }
+}
