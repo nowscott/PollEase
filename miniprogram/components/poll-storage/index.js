@@ -28,25 +28,34 @@ Component({
 
   methods: {
     startAutoSync() {
-      // 每5分钟同步一次
+      // 改为1分钟同步一次
       const timer = setInterval(() => {
         this.sync()
-      }, 5 * 60 * 1000)
+      }, 60 * 1000)
       
       this.setData({ syncTimer: timer })
       
-      // 立即执行一次同步
-      this.sync()
+      // 确保有 openid 才开始同步
+      if (this.properties.openid) {
+        this.sync()
+      }
     },
 
     async sync() {
       try {
+        if (!this.properties.openid) {
+          console.warn('同步失败: openid 为空')
+          return false
+        }
+
         const db = wx.cloud.database()
         
         const now = Date.now()
-        const oneWeekAgo = now - (7 * 24 * 60 * 60 * 1000) // 一周前的时间戳
+        const oneWeekAgo = now - (7 * 24 * 60 * 60 * 1000)
         
-        // 只获取一周内的投票
+        console.log('开始同步，openid:', this.properties.openid)
+        
+        // 获取服务器数据
         const { data } = await db.collection('polls')
           .where({
             _openid: this.properties.openid,
@@ -55,21 +64,12 @@ Component({
           .orderBy('createTime', 'desc')
           .get()
 
-        // 获取本地缓存
-        const cache = this.getCache()
+        console.log('数据库查询结果:', data)
         
-        // 过滤掉本地缓存中一周前的投票
-        const validCacheData = cache.data.filter(poll => poll.endTime > oneWeekAgo)
+        // 直接使用服务器返回的数据更新缓存
+        this.updateCache(data)
         
-        // 如果本地缓存数量与服务器数据不一致，说明有投票被删除或过期
-        if (validCacheData.length !== data.length) {
-          // 更新缓存为服务器数据
-          this.updateCache(data)
-        } else {
-          // 更新缓存中的投票状态
-          this.updateCache(validCacheData)
-        }
-        
+        console.log('同步完成，当前缓存数据数量:', data.length)
         return true
       } catch (err) {
         console.error('同步失败:', err)
@@ -78,15 +78,21 @@ Component({
     },
 
     getCache() {
-      return wx.getStorageSync('pollCache') || {
+      return wx.getStorageSync('pollStorage') || {
         data: []
       }
     },
 
     updateCache(newData) {
-      wx.setStorageSync('pollCache', {
+      console.log('准备更新缓存，新数据:', newData)
+      
+      wx.setStorageSync('pollStorage', {
         data: newData
       })
+      
+      // 验证是否写入成功
+      const cache = wx.getStorageSync('pollStorage')
+      console.log('缓存更新后的数据:', cache)
       
       this.triggerEvent('cacheUpdate', {
         data: newData
@@ -103,6 +109,11 @@ Component({
       const cache = this.getCache()
       const newData = cache.data.filter(p => p._id !== pollId)
       this.updateCache(newData)
+    },
+
+    clearCache() {
+      wx.removeStorageSync('pollStorage')
+      this.sync() // 重新从数据库同步数据
     }
   }
 }) 
