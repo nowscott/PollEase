@@ -59,7 +59,7 @@
 }
 
 .poll-title {
-  font-size: 32rpx;
+  font-size: var(--font-medium);
   color: var(--notion-text);
   margin-bottom: 16rpx;
   display: -webkit-box;
@@ -72,7 +72,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 24rpx;
+  font-size: var(--font-small);
   color: var(--notion-text-light);
 }
 
@@ -80,11 +80,11 @@
 .delete-btn {
   height: 160rpx;
   background: var(--color-error);
-  color: var(--notion-white);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32rpx;
+  font-size: var(--font-medium);
   flex-shrink: 0;
   transition: all 0.2s ease-out;
   width: 160rpx;
@@ -115,41 +115,56 @@
   text-align: center;
   color: var(--notion-text-light);
   padding: 40rpx;
-  font-size: 28rpx;
+  font-size: var(--font-normal);
 }
 
 .loading {
   text-align: center;
   color: var(--notion-text-light);
   padding: 40rpx;
+  font-size: var(--font-normal);
 }
 
 .retry-btn {
+  min-width: 160rpx;
+  width: fit-content;
+  height: 80rpx;
   background-color: var(--color-warning);
   color: var(--notion-text);
   margin-top: 20rpx;
   border: 2rpx solid var(--notion-border);
   border-radius: 20rpx;
+  font-size: var(--font-normal);
+  padding: 0 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 /* 底部按钮容器 */
 .btn-container {
   padding: 32rpx 48rpx 48rpx;
   background: var(--notion-bg);
+  display: flex;
+  justify-content: center;
 }
 
 .submit-btn {
-  width: 100%;
+  min-width: 160rpx;
+  width: fit-content;
   height: 88rpx;
   background: var(--color-warning);
   color: var(--notion-text);
-  font-size: 32rpx;
+  font-size: var(--font-medium);
   font-weight: 500;
   border-radius: 20rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2rpx solid var(--notion-border);
+  padding: 0 48rpx;
+  white-space: nowrap;
 }
 
 .submit-btn:active {

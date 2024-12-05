@@ -19,11 +19,48 @@ page {
   /* 全局背景色和文字颜色 */
   background: var(--notion-bg);
   color: var(--notion-text);
-  font-size: 28rpx;
+  font-size: var(--font-normal);
   line-height: 1.5;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  
+  /* 添加字体相关的全局设置 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  
+  /* 基础字号设置 - 默认尺寸（手机） */
+  --font-small: 24rpx;
+  --font-normal: 28rpx;
+  --font-medium: 32rpx;
+  --font-large: 40rpx;
+  
+  /* iPad 等大屏幕设备的字号缩放 */
+  --font-scale: 1;
+}
+
+/* iPad 和其他大屏设备适配 */
+@media screen and (min-width: 768px) {
+  page {
+    --font-scale: 0.7;  /* 缩小字体比例 */
+    --font-small: calc(24rpx * var(--font-scale));
+    --font-normal: calc(28rpx * var(--font-scale));
+    --font-medium: calc(32rpx * var(--font-scale));
+    --font-large: calc(40rpx * var(--font-scale));
+  }
+}
+
+/* 超大屏幕（如 iPad Pro）适配 */
+@media screen and (min-width: 1024px) {
+  page {
+    --font-scale: 0.6;  /* 进一步缩小字体比例 */
+    --font-small: calc(24rpx * var(--font-scale));
+    --font-normal: calc(28rpx * var(--font-scale));
+    --font-medium: calc(32rpx * var(--font-scale));
+    --font-large: calc(40rpx * var(--font-scale));
+  }
 }
 
 .container {
@@ -43,8 +80,10 @@ button {
   border: 1px solid var(--notion-border);
   border-radius: 6rpx;
   padding: 16rpx 24rpx;
-  font-size: 28rpx;
+  font-size: var(--font-normal);
   transition: all 0.2s ease;
+  font-weight: 400;
+  letter-spacing: 0.3px;
 }
 
 button:active {
@@ -66,11 +105,13 @@ input {
   border-radius: 6rpx;
   padding: 16rpx;
   color: var(--notion-text);
+  font-size: var(--font-normal);
+  letter-spacing: 0.2px;
 }
 
 /* 标题样式 */
 .title {
-  font-size: 40rpx;
+  font-size: var(--font-large);
   font-weight: 600;
   color: var(--notion-text);
   margin-bottom: 24rpx;
@@ -123,4 +164,29 @@ input {
     --color-disabled-text: #666666;
     --color-border-light: #333333;
   }
+}
+
+/* 标题文字样式优化 */
+.poll-title {
+  font-weight: 500;  /* 使用稍细的字重 */
+  letter-spacing: 0.2px;
+  font-size: var(--font-medium);
+}
+
+/* 正文文字样式优化 */
+.poll-info {
+  font-size: var(--font-small);
+  letter-spacing: 0.2px;
+}
+
+/* 按钮文字样式优化 */
+button {
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+/* 输入框文字样式优化 */
+input {
+  font-size: var(--font-normal);
+  letter-spacing: 0.2px;
 }

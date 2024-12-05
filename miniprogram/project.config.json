@@ -1,0 +1,14 @@
+{
+  "setting": {
+    "ignoreDevUnusedFiles": true,
+    "ignoreUploadUnusedFiles": true,
+    "useCompilerPlugins": ["typescript", "less"],
+    "packNpmManually": true,
+    "packNpmRelationList": [],
+    "minified": true,
+    "es6": true,
+    "enhance": true
+  },
+  "libVersion": "3.0.0",
+  "checkSiteMap": false
+} 

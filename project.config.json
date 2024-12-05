@@ -11,6 +11,8 @@
     "useMultiFrameRuntime": true,
     "useApiHook": true,
     "useApiHostProcess": true,
+    "ignoreDevUnusedFiles": true,
+    "ignoreUploadUnusedFiles": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -22,7 +24,7 @@
   },
   "appid": "wxe14acc7c31980b8e",
   "projectname": "poll-mini",
-  "libVersion": "latest",
+  "libVersion": "3.0.0",
   "compileType": "miniprogram",
   "srcMiniprogramRoot": "miniprogram/",
   "packOptions": {
@@ -33,5 +35,6 @@
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
+  "checkSiteMap": false
 }

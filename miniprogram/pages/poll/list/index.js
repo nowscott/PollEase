@@ -17,9 +17,6 @@ Page({
     this.getUserInfo().then(() => {
       this.fetchPollList()
     })
-    
-    // 设置下拉刷新样式
-    this.setRefreshStyle()
   },
 
   onShow() {
@@ -37,7 +34,10 @@ Page({
   async getUserInfo() {
     try {
       const { result } = await wx.cloud.callFunction({
-        name: 'getOpenid'
+        name: 'getOpenid',
+        config: {
+          env: wx.cloud.DYNAMIC_CURRENT_ENV
+        }
       })
       
       if (!result || !result.openid) {
@@ -57,7 +57,6 @@ Page({
   async fetchPollList() {
     if (!this.data.openid) return
 
-    // 不再立即设置 loading 状态，保持当前列表显示
     try {
       const db = wx.cloud.database()
       const { data } = await db.collection('polls')
@@ -78,7 +77,6 @@ Page({
         deleteWidth: this.data.deleteWidth
       }))
 
-      // 数据准备好后再一次性更新
       this.setData({
         pollList,
         loading: false,
@@ -101,7 +99,6 @@ Page({
         duration: 1000
       })
     } finally {
-      // 移除 loading 状态
       this.setData({ loading: false })
       wx.stopPullDownRefresh()
     }
@@ -277,25 +274,5 @@ Page({
     const { pollList } = this.data
     pollList[index].xMove = x
     this.setData({ pollList })
-  },
-
-  // 添加设置下拉刷新样式的方法
-  setRefreshStyle() {
-    const { theme } = wx.getSystemInfoSync()
-    const isDark = theme === 'dark'
-    
-    wx.setBackgroundTextStyle({
-      textStyle: 'dark'
-    })
-    
-    wx.setBackgroundColor({
-      backgroundColor: isDark ? '#1a1a1a' : '#f6f6f6',
-      backgroundColorTop: isDark ? '#1a1a1a' : '#f6f6f6'
-    })
-  },
-
-  // 添加主题变化监听
-  onThemeChange({ theme }) {
-    this.setRefreshStyle()
   }
 })

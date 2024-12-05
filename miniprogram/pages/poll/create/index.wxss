@@ -23,7 +23,7 @@
 }
 
 .poll-title {
-  font-size: 48rpx;
+  font-size: var(--font-large);
   font-weight: 600;
   color: var(--notion-text);
   line-height: 1.3;
@@ -45,7 +45,7 @@
 }
 
 .form-label {
-  font-size: 28rpx;
+  font-size: var(--font-normal);
   color: var(--notion-text-light);
   margin-bottom: 16rpx;
   display: block;
@@ -63,7 +63,7 @@
   background: var(--notion-white);
   border-radius: 20rpx;
   padding: 0 24rpx;
-  font-size: 32rpx;
+  font-size: var(--font-medium);
   color: var(--notion-text);
   box-sizing: border-box;
   border: 2rpx solid var(--notion-border);
@@ -88,7 +88,7 @@
   border-radius: 20rpx;
   padding: 0 24rpx;
   padding-right: 80rpx;
-  font-size: 32rpx;
+  font-size: var(--font-medium);
   color: var(--notion-text);
   box-sizing: border-box;
   border: 2rpx solid var(--notion-border);
@@ -100,7 +100,7 @@
   top: 50%;
   transform: translateY(-50%);
   color: var(--color-error);
-  font-size: 40rpx;
+  font-size: var(--font-large);
   width: 44rpx;
   height: 44rpx;
   line-height: 40rpx;
@@ -108,28 +108,65 @@
   border-radius: 50%;
 }
 
-/* 按钮容器 */
+/* 底部按钮容器 */
 .btn-container {
-  padding: 32rpx 48rpx 48rpx;
+  padding: 32rpx 48rpx calc(32rpx + env(safe-area-inset-bottom));
   background: var(--notion-bg);
+  display: flex;
+  justify-content: center;
 }
 
+/* 创建按钮 */
 .submit-btn {
-  width: 100%;
+  min-width: 160rpx;
+  width: fit-content;
   height: 88rpx;
-  background: var(--color-warning-hover);
+  background: var(--color-warning);
   color: var(--notion-text);
-  font-size: 32rpx;
+  font-size: var(--font-medium);
   font-weight: 500;
   border-radius: 20rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2rpx solid var(--notion-border);
+  padding: 0 48rpx;
+  white-space: nowrap;
 }
 
-.submit-btn:active:not(.disabled) {
-  background: var(--color-success);
+/* 添加选项按钮 */
+.add-option-btn {
+  min-width: 160rpx;
+  width: fit-content;
+  height: 80rpx;
+  background: var(--notion-white);
+  color: var(--notion-text);
+  font-size: var(--font-normal);
+  border: 2rpx solid var(--notion-border);
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32rpx;
+  margin: 32rpx auto;
+  white-space: nowrap;
+}
+
+/* 删除选项按钮 */
+.delete-option-btn {
+  min-width: 80rpx;
+  width: auto;
+  height: 60rpx;
+  background: var(--notion-white);
+  color: var(--color-error);
+  font-size: var(--font-small);
+  border: 1rpx solid var(--notion-border);
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24rpx;
+  margin-left: 16rpx;
 }
 
 /* 覆盖微信小程序默认的禁用按钮样式 */

@@ -23,7 +23,7 @@
 }
 
 .poll-title {
-  font-size: 48rpx;
+  font-size: var(--font-large);
   font-weight: 600;
   color: var(--notion-text);
   margin-bottom: 24rpx;
@@ -32,7 +32,7 @@
 }
 
 .poll-meta {
-  font-size: 24rpx;
+  font-size: var(--font-small);
   color: var(--notion-text-light);
   display: flex;
   flex-direction: column;
@@ -62,7 +62,7 @@
   padding: 4rpx 12rpx;
   border: 2rpx solid var(--notion-border);
   border-radius: 8rpx;
-  font-size: 24rpx;
+  font-size: var(--font-small);
   font-weight: 500;
   background: var(--color-warning);
   color: var(--notion-text-light);
@@ -103,7 +103,7 @@
 }
 
 .option-text {
-  font-size: 28rpx;
+  font-size: var(--font-normal);
   color: var(--notion-text);
   flex: 1;
   margin-right: 32rpx;
@@ -120,13 +120,13 @@
 }
 
 .vote-count {
-  font-size: 28rpx;
+  font-size: var(--font-normal);
   color: var(--notion-text);
   font-weight: 400;
 }
 
 .vote-percentage {
-  font-size: 28rpx;
+  font-size: var(--font-normal);
   color: var(--notion-text-light);
   font-weight: 400;
 }
@@ -136,7 +136,7 @@
   text-align: center;
   padding: 60rpx 40rpx;
   color: var(--notion-text-light);
-  font-size: 28rpx;
+  font-size: var(--font-normal);
 }
 
 .error {
@@ -148,7 +148,7 @@
   background: var(--notion-bg);
   border: 2rpx solid var(--notion-border);
   color: var(--notion-text);
-  font-size: 28rpx;
+  font-size: var(--font-normal);
   padding: 12rpx 24rpx;
   border-radius: 8rpx;
 }
@@ -157,23 +157,27 @@
 .share-section {
   padding: 24rpx 32rpx 48rpx;
   background: var(--notion-bg);
+  display: flex;
+  justify-content: center;
 }
 
 .share-btn {
-  width: calc(100% - 64rpx);
-  margin: 0 auto;
-  height: 80rpx;
-  line-height: 80rpx;
-  border-radius: 20rpx;
+  min-width: 160rpx;
+  width: fit-content;
+  height: 88rpx;
   background: var(--color-warning);
   color: var(--notion-text);
-  font-size: 28rpx;
+  font-size: var(--font-medium);
   font-weight: 500;
-  border: 2rpx solid var(--notion-border);
-  transition: all 0.2s ease;
+  border-radius: 20rpx;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2rpx solid var(--notion-border);
+  padding: 0 48rpx;
+  margin: 0;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .share-btn::after {
