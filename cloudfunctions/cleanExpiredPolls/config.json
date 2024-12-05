@@ -1,9 +1,9 @@
 {
-  "triggers": [
-    {
-      "name": "cleanExpiredPolls",
-      "type": "timer",
-      "config": "0 0 3 * * * *"
-    }
-  ]
-} 
+    "triggers": [
+      {
+        "name": "myTrigger",
+        "type": "timer",
+        "config": "0 0 0 3 * * *"
+      }
+    ]
+  }
