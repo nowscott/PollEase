@@ -104,3 +104,23 @@ input {
   width: 100%;
   margin: 24rpx 0;
 }
+
+/* 添加深色模式变量 */
+@media (prefers-color-scheme: dark) {
+  page {
+    --notion-white: #1f1f1f;
+    --notion-bg: #000000;
+    --notion-text: #ffffff;
+    --notion-text-light: #999999;
+    --notion-border: #333333;
+    --notion-hover: #2f2f2f;
+    
+    /* 深色模式下的扩展颜色 */
+    --color-error: #ff4d4f;
+    --color-success: #52c41a;
+    --color-warning: #2b2111;
+    --color-warning-hover: #332914;
+    --color-disabled-text: #666666;
+    --color-border-light: #333333;
+  }
+}

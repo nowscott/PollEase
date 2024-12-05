@@ -5,12 +5,15 @@
     "pages/poll/detail/index"
   ],
   "window": {
-    "backgroundColor": "#f7f6f3",
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#f7f6f3",
+    "backgroundColor": "@backgroundColor",
+    "backgroundTextStyle": "@backgroundTextStyle",
+    "navigationBarBackgroundColor": "@navigationBarBackgroundColor",
     "navigationBarTitleText": "投一下",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "@navigationBarTextStyle",
+    "navigationStyle": "default"
   },
+  "darkmode": true,
+  "themeLocation": "theme.json",
   "sitemapLocation": "sitemap.json",
   "style": "v2",
   "lazyCodeLoading": "requiredComponents"

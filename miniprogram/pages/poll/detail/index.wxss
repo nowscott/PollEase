@@ -183,3 +183,23 @@
 .share-btn:active {
   background: var(--color-warning-hover);
 }
+
+/* 调整投票选项在深色模式下的背景透明度 */
+.option {
+  background: var(--notion-white);
+}
+
+.option-background {
+  background: var(--notion-hover);
+}
+
+@media (prefers-color-scheme: dark) {
+  .option-background {
+    opacity: 0.2 !important;
+  }
+  
+  .expired-tag, .voted-tag {
+    background: var(--color-warning);
+    border-color: var(--notion-border);
+  }
+}

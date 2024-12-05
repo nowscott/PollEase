@@ -138,3 +138,25 @@
   color: var(--color-disabled-text) !important;
   border-color: var(--notion-border) !important;
 }
+
+/* 调整输入框在深色模式下的样式 */
+.title-input, .option-input {
+  background: var(--notion-white);
+  color: var(--notion-text);
+  border-color: var(--notion-border);
+}
+
+@media (prefers-color-scheme: dark) {
+  .title-input:focus, .option-input:focus {
+    border-color: var(--notion-text-light);
+  }
+  
+  .submit-btn {
+    background: var(--color-warning);
+    border-color: var(--notion-border);
+  }
+  
+  .submit-btn:active:not(.disabled) {
+    background: var(--color-warning-hover);
+  }
+}

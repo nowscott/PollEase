@@ -17,20 +17,20 @@ Page({
     this.getUserInfo().then(() => {
       this.fetchPollList()
     })
+    
+    // 设置下拉刷新样式
+    this.setRefreshStyle()
   },
 
   onShow() {
     if (this.data.needRefresh) {
-      this.fetchPollList();
-      this.setData({ needRefresh: false });
+      this.fetchPollList()
+      this.setData({ needRefresh: false })
     }
   },
 
   onPullDownRefresh() {
-    // 添加延迟以提供更好的视觉反馈
-    setTimeout(() => {
-      this.fetchPollList()
-    }, 500)
+    this.fetchPollList()
   },
 
   // 获取用户信息
@@ -151,7 +151,7 @@ Page({
     const { pollList } = this.data
     const item = pollList[index]
     
-    // 重���删除按钮宽度
+    // 重删除按钮宽度
     pollList[index].deleteWidth = this.data.deleteWidth
     
     // 如果滑动距离超过删除按钮宽度的1.4倍，触发删除操作
@@ -217,7 +217,7 @@ Page({
 
   // 跳转到创建投票页面
   goToCreate() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/poll/create/index'
     })
   },
@@ -225,7 +225,7 @@ Page({
   // 跳转到投票详情页面
   goToPollDetail(e) {
     const pollId = e.currentTarget.dataset.pollId
-    wx.redirectTo({
+    wx.navigateTo({
       url: `/pages/poll/detail/index?pollId=${pollId}`
     })
   },
@@ -277,5 +277,25 @@ Page({
     const { pollList } = this.data
     pollList[index].xMove = x
     this.setData({ pollList })
+  },
+
+  // 添加设置下拉刷新样式的方法
+  setRefreshStyle() {
+    const { theme } = wx.getSystemInfoSync()
+    const isDark = theme === 'dark'
+    
+    wx.setBackgroundTextStyle({
+      textStyle: 'dark'
+    })
+    
+    wx.setBackgroundColor({
+      backgroundColor: isDark ? '#1a1a1a' : '#f6f6f6',
+      backgroundColorTop: isDark ? '#1a1a1a' : '#f6f6f6'
+    })
+  },
+
+  // 添加主题变化监听
+  onThemeChange({ theme }) {
+    this.setRefreshStyle()
   }
 })
