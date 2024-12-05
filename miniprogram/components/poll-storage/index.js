@@ -34,20 +34,42 @@ Component({
       }, 5 * 60 * 1000)
       
       this.setData({ syncTimer: timer })
+      
+      // 立即执行一次同步
+      this.sync()
     },
 
     async sync() {
       try {
         const db = wx.cloud.database()
+        
+        const now = Date.now()
+        const oneWeekAgo = now - (7 * 24 * 60 * 60 * 1000) // 一周前的时间戳
+        
+        // 只获取一周内的投票
         const { data } = await db.collection('polls')
           .where({
-            _openid: this.properties.openid
+            _openid: this.properties.openid,
+            endTime: db.command.gt(oneWeekAgo)
           })
           .orderBy('createTime', 'desc')
           .get()
 
-        // 更新缓存
-        this.updateCache(data)
+        // 获取本地缓存
+        const cache = this.getCache()
+        
+        // 过滤掉本地缓存中一周前的投票
+        const validCacheData = cache.data.filter(poll => poll.endTime > oneWeekAgo)
+        
+        // 如果本地缓存数量与服务器数据不一致，说明有投票被删除或过期
+        if (validCacheData.length !== data.length) {
+          // 更新缓存为服务器数据
+          this.updateCache(data)
+        } else {
+          // 更新缓存中的投票状态
+          this.updateCache(validCacheData)
+        }
+        
         return true
       } catch (err) {
         console.error('同步失败:', err)
