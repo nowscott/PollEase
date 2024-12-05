@@ -2,7 +2,8 @@
   "pages": [
     "pages/poll/list/index",
     "pages/poll/create/index",
-    "pages/poll/detail/index"
+    "pages/poll/detail/index",
+    "pages/poll/templates/index"
   ],
   "window": {
     "backgroundColor": "@backgroundColor",

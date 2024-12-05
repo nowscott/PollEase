@@ -1,0 +1,94 @@
+.page-wrapper {
+  background-color: var(--notion-bg);
+  min-height: 100vh;
+  color: var(--notion-text);
+}
+
+.container {
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.poll-header {
+  margin: 0;
+  padding: 60rpx 48rpx 48rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.poll-title {
+  font-size: var(--font-large);
+  font-weight: 600;
+  color: var(--notion-text);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.template-list {
+  padding: 24rpx;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+}
+
+.template-item {
+  background: var(--notion-white);
+  padding: 24rpx;
+  border-radius: 20rpx;
+  border: 2rpx solid var(--notion-border);
+  transition: all 0.2s ease;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.template-item-hover {
+  background: var(--notion-hover);
+  transform: scale(0.98);
+}
+
+.template-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.template-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+  padding: 4rpx 0;
+}
+
+.template-title {
+  font-size: var(--font-medium);
+  font-weight: 500;
+  color: var(--notion-text);
+  display: flex;
+  align-items: center;
+  letter-spacing: 3px;
+}
+
+.template-desc {
+  font-size: var(--font-normal);
+  color: var(--notion-text-light);
+  margin-bottom: 16rpx;
+}
+
+.template-options {
+  font-size: var(--font-small);
+  color: var(--notion-text-light);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.template-option {
+  margin-bottom: 8rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 

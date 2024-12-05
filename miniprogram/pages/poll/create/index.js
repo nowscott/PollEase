@@ -14,7 +14,19 @@ Page({
     if (templateId) {
       this.loadTemplateData(templateId)
     }
-    this.checkCanSubmit()
+
+    // 获取事件通道
+    const eventChannel = this.getOpenerEventChannel()
+    eventChannel.on('setTemplate', template => {
+      if (template) {
+        const options = [...template.options, '']
+        this.setData({
+          title: template.title,
+          options: options
+        })
+        this.checkCanSubmit()
+      }
+    })
   },
 
   async loadTemplateData(templateId) {

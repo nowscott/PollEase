@@ -294,5 +294,11 @@ Page({
 
     console.log('list page: updating poll list:', pollList)
     this.setData({ pollList })
+  },
+
+  goToTemplates() {
+    wx.navigateTo({
+      url: '/pages/poll/templates/index'
+    })
   }
 })

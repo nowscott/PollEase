@@ -1,0 +1,35 @@
+<view class="page-wrapper">
+  <view class="container">
+    <view class="poll-header">
+      <view class="poll-title">选择模板</view>
+    </view>
+
+    <view class="template-list">
+      <view class="template-item" 
+            wx:for="{{templates}}" 
+            wx:key="id"
+            bindtap="onTemplateSelect"
+            data-index="{{index}}"
+            hover-class="template-item-hover">
+        <view class="template-content">
+          <view class="template-header">
+            <view class="template-title">{{item.title}}</view>
+          </view>
+          <view class="template-desc">{{item.description}}</view>
+          <view class="template-options">
+            <view class="template-option" 
+                  wx:for="{{item.template.options}}" 
+                  wx:key="*this"
+                  wx:for-item="option"
+                  wx:if="{{index < 3}}">
+              {{option}}
+            </view>
+            <view class="template-option" wx:if="{{item.template.options.length > 3}}">
+              ...
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view> 

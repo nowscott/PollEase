@@ -161,6 +161,12 @@
   justify-content: center;
 }
 
+.btn-group {
+  display: flex;
+  gap: 24rpx;
+  width: 100%;
+}
+
 .submit-btn {
   min-width: 160rpx;
   width: fit-content;
@@ -181,6 +187,11 @@
 .submit-btn:active {
   background: var(--color-warning-hover);
 }
+
+.submit-btn.half {
+  flex: 1;
+}
+
 /* 第一个投票项容器添加上边框 */
 .poll-item-container:first-child {
   border-top: 1rpx solid var(--notion-border);

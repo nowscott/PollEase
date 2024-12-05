@@ -72,10 +72,17 @@
   </scroll-view>
 
   <view class="btn-container">
-    <button 
-      class="submit-btn" 
-      hover-class="button-hover" 
-      bindtap="goToCreate"
-    >新建投票</button>
+    <view class="btn-group">
+      <button 
+        class="submit-btn half" 
+        hover-class="button-hover" 
+        bindtap="goToCreate"
+      >新建空白</button>
+      <button 
+        class="submit-btn half" 
+        hover-class="button-hover" 
+        bindtap="goToTemplates"
+      >从模板新建</button>
+    </view>
   </view>
 </view>

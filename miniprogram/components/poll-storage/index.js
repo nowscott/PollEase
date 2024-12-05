@@ -50,18 +50,15 @@ Component({
 
         const db = wx.cloud.database()
         
-        const now = Date.now()
-        const oneWeekAgo = now - (7 * 24 * 60 * 60 * 1000)
-        
         console.log('开始同步，openid:', this.properties.openid)
         
         // 获取服务器数据
         const { data } = await db.collection('polls')
           .where({
-            _openid: this.properties.openid,
-            endTime: db.command.gt(oneWeekAgo)
+            _openid: this.properties.openid
           })
           .orderBy('createTime', 'desc')
+          .limit(20)
           .get()
 
         console.log('数据库查询结果:', data)
