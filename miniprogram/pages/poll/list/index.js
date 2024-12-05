@@ -26,10 +26,6 @@ Page({
     }
   },
 
-  onPullDownRefresh() {
-    this.fetchPollList()
-  },
-
   // 获取用户信息
   async getUserInfo() {
     try {
@@ -55,27 +51,37 @@ Page({
 
   // 获取投票列表
   async fetchPollList() {
+    console.log('list page: fetching poll list, openid:', this.data.openid)
     if (!this.data.openid) return
 
-    try {
-      const db = wx.cloud.database()
-      const { data } = await db.collection('polls')
-        .where({
-          _openid: this.data.openid
-        })
-        .orderBy('createTime', 'desc')
-        .get()
+    this.setData({ loading: true })
 
-      const pollList = data.map(poll => ({
+    const pollStorage = this.selectComponent('#pollStorage')
+    console.log('list page: poll-storage component:', pollStorage)
+    
+    if (!pollStorage) {
+      console.error('list page: poll-storage component not found')
+      this.setData({ loading: false })
+      return
+    }
+
+    try {
+      console.log('list page: starting sync')
+      await pollStorage.sync()
+      
+      const cache = pollStorage.getCache()
+      console.log('list page: got cache:', cache)
+      
+      const pollList = (cache.data || []).map(poll => ({
         ...poll,
         totalVotes: poll.votes ? 
-          (Array.isArray(poll.votes) ? 
-            poll.votes.reduce((a, b) => a + b, 0) : 
-            Object.values(poll.votes).reduce((a, b) => a + b, 0)) : 0,
+          Object.values(poll.votes).reduce((a, b) => a + b, 0) : 0,
         endTimeStr: this.formatDate(poll.endTime),
         xMove: 0,
         deleteWidth: this.data.deleteWidth
       }))
+
+      console.log('list page: processed poll list:', pollList)
 
       this.setData({
         pollList,
@@ -83,24 +89,10 @@ Page({
         error: null
       })
 
-      wx.showToast({
-        title: '刷新成功',
-        icon: 'success',
-        duration: 1000
-      })
-
     } catch (err) {
-      this.setData({
-        error: '获取列表失败'
-      })
-      wx.showToast({
-        title: '刷新失败',
-        icon: 'error',
-        duration: 1000
-      })
-    } finally {
+      console.error('list page: fetch failed:', err)
+      this.handleError('获取列表失败', err)
       this.setData({ loading: false })
-      wx.stopPullDownRefresh()
     }
   },
 
@@ -222,9 +214,17 @@ Page({
   // 跳转到投票详情页面
   goToPollDetail(e) {
     const pollId = e.currentTarget.dataset.pollId
+    
+    // 直接跳转
     wx.navigateTo({
       url: `/pages/poll/detail/index?pollId=${pollId}`
     })
+    
+    // 同时触发同步，不等待结果
+    const pollStorage = this.selectComponent('#pollStorage')
+    if (pollStorage) {
+      pollStorage.sync()
+    }
   },
 
   // 删除投票
@@ -233,8 +233,11 @@ Page({
       const db = wx.cloud.database()
       await db.collection('polls').doc(pollId).remove()
       
-      const updatedPollList = this.data.pollList.filter(poll => poll._id !== pollId)
-      this.setData({ pollList: updatedPollList })
+      // 使用 id 选择器
+      const pollStorage = this.selectComponent('#pollStorage')
+      if (pollStorage) {
+        pollStorage.removeFromCache(pollId)
+      }
 
       wx.showToast({
         title: '删除成功',
@@ -273,6 +276,23 @@ Page({
     // 更新滑动位置
     const { pollList } = this.data
     pollList[index].xMove = x
+    this.setData({ pollList })
+  },
+
+  // 添加缓存更新的处理方法
+  onCacheUpdate(e) {
+    console.log('list page: cache update event:', e.detail)
+    const { data } = e.detail
+    const pollList = data.map(poll => ({
+      ...poll,
+      totalVotes: poll.votes ? 
+        Object.values(poll.votes).reduce((a, b) => a + b, 0) : 0,
+      endTimeStr: this.formatDate(poll.endTime),
+      xMove: 0,
+      deleteWidth: this.data.deleteWidth
+    }))
+
+    console.log('list page: updating poll list:', pollList)
     this.setData({ pollList })
   }
 })

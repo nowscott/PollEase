@@ -98,7 +98,6 @@ Page({
     if (!this.data.canSubmit) return
 
     const title = this.data.title.trim()
-    // 只保留非空的选项
     const options = this.data.options.filter(opt => opt.trim().length > 0)
 
     if (options.length < 2) {
@@ -130,6 +129,29 @@ Page({
       wx.hideLoading()
       
       if (result._id) {
+        // 获取列表页实例
+        const pages = getCurrentPages()
+        const listPage = pages.find(p => p.route === 'pages/poll/list/index')
+        
+        if (listPage) {
+          // 获取 poll-storage 组件
+          const pollStorage = listPage.selectComponent('#pollStorage')
+          if (pollStorage) {
+            // 直接添加到缓存
+            const newPoll = {
+              _id: result._id,
+              title,
+              options,
+              createTime: Date.now(),
+              endTime: Date.now() + 24 * 60 * 60 * 1000,
+              votes: {},
+              voters: [],
+              _openid: listPage.data.openid
+            }
+            pollStorage.addToCache(newPoll)
+          }
+        }
+
         wx.showToast({
           title: '创建成功',
           icon: 'success',
