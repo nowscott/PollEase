@@ -31,14 +31,14 @@
       },
       {
         "pagePath": "pages/templates/index",
-        "text": "模板",
-        "iconPath": "images/templates.png",
-        "selectedIconPath": "images/templates-active.png"
+        "text": "新建",
+        "iconPath": "images/create.png",
+        "selectedIconPath": "images/create-active.png"
       }
     ],
-    "color": "#2f3437",
-    "selectedColor": "#1296db",
-    "backgroundColor": "#f7f6f3",
-    "borderStyle": "black"
+    "color": "#aad08f",
+    "selectedColor": "#0e932e",
+    "backgroundColor": "@navBgColor",
+    "borderStyle": "@borderStyle"
   }
 }
