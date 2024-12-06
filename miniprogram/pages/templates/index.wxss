@@ -1,7 +1,7 @@
 .page-wrapper {
   background-color: var(--notion-bg);
   min-height: 100vh;
-  color: var(--notion-text);
+  color: var(--textColor);
 }
 
 .container {
@@ -21,7 +21,7 @@
 .poll-title {
   font-size: var(--font-large);
   font-weight: 600;
-  color: var(--notion-text);
+  color: var(--textColor);
   line-height: 1.3;
   letter-spacing: -0.02em;
 }
@@ -65,7 +65,7 @@
 .template-title {
   font-size: var(--font-medium);
   font-weight: 500;
-  color: var(--notion-text);
+  color: var(--textColor);
   display: flex;
   align-items: center;
   letter-spacing: 3px;
@@ -73,13 +73,13 @@
 
 .template-desc {
   font-size: var(--font-normal);
-  color: var(--notion-text-light);
+  color: var(--textColor-light);
   margin-bottom: 16rpx;
 }
 
 .template-options {
   font-size: var(--font-small);
-  color: var(--notion-text-light);
+  color: var(--textColor-light);
   flex: 1;
   display: flex;
   flex-direction: column;

@@ -1,29 +1,36 @@
 /**app.wxss**/
 page {
-  /* Notion 风格的基础颜色变量 */
-  --notion-white: #ffffff;
-  --notion-bg: #f7f6f3;
-  --notion-text: #37352f;
-  --notion-text-light: #555555;
-  --notion-border: #e6e6e6;
-  --notion-hover: #f1f1ef;
-  
   /* 扩展的颜色变量 */
+  --bgColor: #f7f6f3;
+  --dividerColor: #d6d3cb;
+  --textColor: #000;
+  --subTextColor: rgba(0, 0, 0, 0.6); /* 黑色的 60% 不透明度 */
+  --btnColor: #8a8a8a;
+  --btnSelected: #eeb172;
   --color-error: #ff4d4f;
   --color-success: #6bb56d;
   --color-warning: #fff9e6;
   --color-warning-hover: #fff3cc;
   --color-disabled-text: #777777;
   --color-border-light: #f0f0f0;
-  
+}
+/* 在深色模式下定义颜色变量 */
+@media (prefers-color-scheme: dark) {
+  page {
+    --bgColor: #3a3937;
+    --textColor: #6a6965;
+    --subTextColor: rgba(255, 255, 255, 0.6);/* 白色的 60% 不透明度 */
+  }
+}
+page {
   /* 全局背景色和文字颜色 */
-  background: var(--notion-bg);
-  color: var(--notion-text);
+  color: var(--textColor);
   font-size: var(--font-normal);
   line-height: 1.5;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  --spacing-left: 24rpx;
   
   /* 添加字体相关的全局设置 */
   font-family: 
@@ -41,6 +48,7 @@ page {
   --font-normal: 28rpx;
   --font-medium: 32rpx;
   --font-large: 40rpx;
+  --font-xlarge: 48rpx;
   
   /* iPad 等大屏幕设备的字号缩放 */
   --font-scale: 1;
@@ -73,15 +81,13 @@ page {
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  background: var(--notion-bg);
   min-height: 100vh;
   padding: 24rpx;
 }
 
 /* 按钮样式 */
 button {
-  background: var(--notion-white);
-  color: var(--notion-text);
+  color: var(--textCol);
   border: 1px solid var(--notion-border);
   border-radius: 6rpx;
   padding: 16rpx 24rpx;
@@ -109,7 +115,7 @@ input {
   border: 1px solid var(--notion-border);
   border-radius: 6rpx;
   padding: 16rpx;
-  color: var(--notion-text);
+  color: var(--textColo r);
   font-size: var(--font-normal);
   letter-spacing: 0.2px;
 }
@@ -118,7 +124,7 @@ input {
 .title {
   font-size: var(--font-large);
   font-weight: 600;
-  color: var(--notion-text);
+  color: var(--textColor);
   margin-bottom: 24rpx;
 }
 
@@ -140,7 +146,7 @@ input {
   border-radius: 4rpx;
   font-size: 24rpx;
   background: var(--notion-hover);
-  color: var(--notion-text-light);
+  color: var(--textColor-light);
 }
 
 /* 分割线样式 */
@@ -156,8 +162,8 @@ input {
   page {
     --notion-white: #1f1f1f;
     --notion-bg: #000000;
-    --notion-text: #ffffff;
-    --notion-text-light: #cccccc;
+    --textColor: #ffffff;
+    --textColor-light: #cccccc;
     --notion-border: #333333;
     --notion-hover: #2f2f2f;
     
@@ -169,19 +175,6 @@ input {
     --color-disabled-text: #999999;
     --color-border-light: #333333;
   }
-}
-
-/* 标题文字样式优化 */
-.poll-title {
-  font-weight: 500;  /* 使用稍细的字重 */
-  letter-spacing: 0.2px;
-  font-size: var(--font-medium);
-}
-
-/* 正文文字样式优化 */
-.poll-info {
-  font-size: var(--font-small);
-  letter-spacing: 0.2px;
 }
 
 /* 按钮文字样式优化 */

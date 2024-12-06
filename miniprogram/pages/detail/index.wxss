@@ -1,9 +1,9 @@
 /* pages/poll/detail/index.wxss */
 
 .page-wrapper {
-  background-color: var(--notion-bg);
+  background-color: var(--backgroundColor);
   min-height: 100vh;
-  color: var(--notion-text);
+  color: var(--textColor);
 }
 
 .container {
@@ -25,7 +25,7 @@
 .poll-title {
   font-size: var(--font-large);
   font-weight: 600;
-  color: var(--notion-text);
+  color: var(--textColor);
   margin-bottom: 24rpx;
   line-height: 1.3;
   letter-spacing: -0.02em;
@@ -33,7 +33,7 @@
 
 .poll-meta {
   font-size: var(--font-small);
-  color: var(--notion-text-light);
+  color: var(--textColor-light);
   display: flex;
   flex-direction: column;
   gap: 8rpx;
@@ -65,7 +65,7 @@
   font-size: var(--font-small);
   font-weight: 500;
   background: var(--color-warning);
-  color: var(--notion-text-light);
+  color: var(--textColor-light);
 }
 
 /* 选项样式 */
@@ -104,7 +104,7 @@
 
 .option-text {
   font-size: var(--font-normal);
-  color: var(--notion-text);
+  color: var(--textColor);
   flex: 1;
   margin-right: 32rpx;
   line-height: 1.5;
@@ -121,13 +121,13 @@
 
 .vote-count {
   font-size: var(--font-normal);
-  color: var(--notion-text);
+  color: var(--textColor);
   font-weight: 400;
 }
 
 .vote-percentage {
   font-size: var(--font-normal);
-  color: var(--notion-text-light);
+  color: var(--textColor-light);
   font-weight: 400;
 }
 
@@ -135,7 +135,7 @@
 .loading, .error {
   text-align: center;
   padding: 60rpx 40rpx;
-  color: var(--notion-text-light);
+  color: var(--textColor-light);
   font-size: var(--font-normal);
 }
 
@@ -145,9 +145,9 @@
 
 .retry-btn {
   margin-top: 24rpx;
-  background: var(--notion-bg);
+  background: var(--backgroundColor);
   border: 2rpx solid var(--notion-border);
-  color: var(--notion-text);
+  color: var(--textColor);
   font-size: var(--font-normal);
   padding: 12rpx 24rpx;
   border-radius: 8rpx;
@@ -156,7 +156,7 @@
 /* 分享按钮 */
 .share-section {
   padding: 24rpx 32rpx 48rpx;
-  background: var(--notion-bg);
+  background: var(--backgroundColor);
   display: flex;
   justify-content: center;
 }
@@ -166,7 +166,7 @@
   width: fit-content;
   height: 88rpx;
   background: var(--color-warning);
-  color: var(--notion-text);
+  color: var(--textColor);
   font-size: var(--font-medium);
   font-weight: 500;
   border-radius: 20rpx;
@@ -245,7 +245,6 @@
   font-weight: 500;
   border: none;
 }
-
 .auth-btn::after {
   border: none;
 }

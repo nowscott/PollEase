@@ -1,5 +1,6 @@
 {
   "usingComponents": {
     "poll-storage": "/components/poll-storage/index"
-  }
+  },
+  "disableScroll": true
 }

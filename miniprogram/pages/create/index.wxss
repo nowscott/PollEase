@@ -1,7 +1,7 @@
 .page-wrapper {
-  background-color: var(--notion-bg);
+  background-color: var(--backgroundColor);
   min-height: 100vh;
-  color: var(--notion-text);
+  color: var(--textColor);
 }
 
 .container {
@@ -19,13 +19,13 @@
   padding: 100rpx 48rpx 48rpx;
   width: 100%;
   box-sizing: border-box;
-  background: var(--notion-bg);
+  background: var(--backgroundColor);
 }
 
 .poll-title {
   font-size: var(--font-large);
   font-weight: 600;
-  color: var(--notion-text);
+  color: var(--textColor);
   line-height: 1.3;
   letter-spacing: -0.02em;
 }
@@ -36,7 +36,7 @@
   margin: 0;
   flex: 1;
   padding: 24rpx 24rpx;
-  background: var(--notion-bg);
+  background: var(--backgroundColor);
   box-sizing: border-box;
 }
 
@@ -46,7 +46,7 @@
 
 .form-label {
   font-size: var(--font-normal);
-  color: var(--notion-text-light);
+  color: var(--textColor-light);
   margin-bottom: 16rpx;
   display: block;
   padding: 0 24rpx;
@@ -64,7 +64,7 @@
   border-radius: 20rpx;
   padding: 0 24rpx;
   font-size: var(--font-medium);
-  color: var(--notion-text);
+  color: var(--textColor);
   box-sizing: border-box;
   border: 2rpx solid var(--notion-border);
 }
@@ -89,7 +89,7 @@
   padding: 0 24rpx;
   padding-right: 80rpx;
   font-size: var(--font-medium);
-  color: var(--notion-text);
+  color: var(--textColor);
   box-sizing: border-box;
   border: 2rpx solid var(--notion-border);
 }
@@ -111,7 +111,7 @@
 /* 底部按钮容器 */
 .btn-container {
   padding: 32rpx 48rpx calc(32rpx + env(safe-area-inset-bottom));
-  background: var(--notion-bg);
+  background: var(--backgroundColor);
   display: flex;
   justify-content: center;
 }
@@ -122,7 +122,7 @@
   width: fit-content;
   height: 88rpx;
   background: var(--color-warning);
-  color: var(--notion-text);
+  color: var(--textColor);
   font-size: var(--font-medium);
   font-weight: 500;
   border-radius: 20rpx;
@@ -140,7 +140,7 @@
   width: fit-content;
   height: 80rpx;
   background: var(--notion-white);
-  color: var(--notion-text);
+  color: var(--textColor);
   font-size: var(--font-normal);
   border: 2rpx solid var(--notion-border);
   border-radius: 20rpx;
@@ -179,13 +179,13 @@
 /* 调整输入框在深色模式下的样式 */
 .title-input, .option-input {
   background: var(--notion-white);
-  color: var(--notion-text);
+  color: var(--textColor);
   border-color: var(--notion-border);
 }
 
 @media (prefers-color-scheme: dark) {
   .title-input:focus, .option-input:focus {
-    border-color: var(--notion-text-light);
+    border-color: var(--textColor-light);
   }
   
   .submit-btn {
@@ -205,7 +205,7 @@
   border-radius: 20rpx;
   padding: 24rpx;
   font-size: var(--font-medium);
-  color: var(--notion-text);
+  color: var(--textColor);
   box-sizing: border-box;
   border: 2rpx solid var(--notion-border);
 }
@@ -213,6 +213,6 @@
 /* 调整深色模式下的样式 */
 @media (prefers-color-scheme: dark) {
   .textarea:focus {
-    border-color: var(--notion-text-light);
+    border-color: var(--textColor-light);
   }
 }

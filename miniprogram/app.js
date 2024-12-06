@@ -10,6 +10,5 @@ App({
       })
     }
   },
-
   globalData: {}
 })

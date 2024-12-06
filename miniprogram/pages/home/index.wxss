@@ -3,207 +3,102 @@
   padding: 0;
   margin: 0;
   display: flex;
+  height: 100vh;
   flex-direction: column;
-  min-height: 100vh;
-  background-color: var(--notion-bg);
+  background-color: var(--bgColor);
+}
+
+/* 标题区域 */
+.title {
+  width: 100%;
+  font-size: var(--font-xlarge);
+  color: var(--textColor);
+}
+
+.title-text {
+  display: inline-block;
+  padding: 0 var(--spacing-left);
+}
+
+/* 容器样式 */
+.toggle-container {
+  display: flex;
+  background-color: var(--btnColor);
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 按钮基础样式 */
+.toggle-button {
+  flex: 1;
+  text-align: center;
+  padding: 12rpx 16rpx;
+  font-size: var(--font-normal);
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* 被选中的按钮样式 */
+.toggle-button.selected {
+  background-color: var(--btnSelected);
+  color: #fff;
+  font-weight: bold;
+  box-shadow: inset 0 0 4rpx rgba(0, 0, 0, 0.2);
 }
 
 /* 列表区域 */
 .poll-list {
-  height: 88vh;
-  margin: 0;
-  margin-top: 160rpx;
-}
-
-/* 列表区域 - 内部容器 */
-.poll-list-inner {
-  height: 100%;
-  border: 1rpx solid var(--notion-border);
-  background-color: var(--notion-white);
-  margin: 16rpx;
+  background: var(--bgColor);
+  width: 100%;
+  flex: 1;
 }
 
 /* 投票项容器 */
 .poll-item-container {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  background-color: var(--notion-bg);
-  border-bottom: 1rpx solid var(--notion-border);
-}
-
-/* 移除最后一个元素的分隔线 */
-.poll-item-container:last-child {
-  border-bottom: none;
-}
-
-/* 第一个投票项容器添加上边框 */
-.poll-item-container:first-child {
-  border-top: 1rpx solid var(--notion-border);
-}
-
-/* 可移动区域 */
-.movable-area {
-  width: 100%;
-  height: 160rpx;
-  position: relative;
-  background: var(--notion-bg);
-  overflow: hidden;
-}
-
-/* 可移动视图 */
-.movable-view {
-  width: calc(100% + 160rpx);
-  height: 160rpx;
-  z-index: 2;
-  background: var(--notion-white);
+  padding: var(--spacing-left);
 }
 
 /* 内容包装器 */
 .content-wrapper {
   display: flex;
-  width: 100%;
   height: 100%;
-  transform: translateX(0);
-  background: var(--notion-white);
 }
 
 /* 投票项主体内容 */
 .poll-item {
   flex: 1;
-  height: 160rpx;
-  padding: 24rpx 32rpx;
   box-sizing: border-box;
-  background: var(--notion-white);
-  border-bottom: 1rpx solid var(--notion-border);
+  background: var(--listBackgroundColor);
+  padding: 20rpx 0;
+  border-bottom: 3rpx dashed var(--dividerColor);
 }
 
 /* 投票标题 */
 .poll-title {
   font-size: var(--font-medium);
-  color: var(--notion-text);
-  margin-bottom: 16rpx;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
+  font-weight: 500;
+  color: var(--textColor);
+  margin-bottom: 24rpx;
 }
 
-/* 投票信息 */
+/* 投票截止时间和票数 */
 .poll-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: var(--font-small);
-  color: var(--notion-text-light);
+  color: var(--subTextColor);
 }
 
-/* 删除按钮 */
-.delete-btn {
-  height: 160rpx;
-  background: var(--color-error);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-medium);
-  flex-shrink: 0;
-  transition: all 0.2s ease-out;
-  width: 160rpx;
-  padding: 0 24rpx;
-  box-sizing: border-box;
-}
-
-/* 拉伸状态的样式 */
-.delete-btn.stretching {
-  width: 240rpx;
-  opacity: 0.9;
-  letter-spacing: 4rpx;
-  background: #ff3b30;
-}
-
-/* 添加即将删除状态 */
-.delete-btn.will-delete {
-  width: 640rpx;
-  opacity: 0.95;
-  font-size: 32rpx;
-  letter-spacing: 12rpx;
-  background: #ff1a1a;
-  padding: 0 48rpx;
-}
-
-/* 空状态和错误状态 */
-.empty, .error {
+.error {
   text-align: center;
-  color: var(--notion-text-light);
+  color: var(--subTextColor);
   padding: 40rpx;
   font-size: var(--font-normal);
 }
 
-.loading {
-  text-align: center;
-  color: var(--notion-text-light);
-  padding: 40rpx;
-  font-size: var(--font-normal);
-}
-
-.retry-btn {
-  min-width: 160rpx;
-  width: fit-content;
-  height: 80rpx;
-  background-color: var(--color-warning);
-  color: var(--notion-text);
-  margin-top: 20rpx;
-  border: 2rpx solid var(--notion-border);
-  border-radius: 20rpx;
-  font-size: var(--font-normal);
-  padding: 0 32rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-}
-
-/* 底部按钮容器 */
-.btn-container {
-  padding: 32rpx 48rpx 48rpx;
-  background: var(--notion-bg);
-  display: flex;
-  justify-content: center;
-}
-
-.btn-group {
-  display: flex;
-  gap: 24rpx;
-  width: 100%;
-}
-
-.submit-btn {
-  min-width: 160rpx;
-  width: fit-content;
-  height: 88rpx;
-  background: var(--color-warning);
-  color: var(--notion-text);
-  font-size: var(--font-medium);
-  font-weight: 500;
-  border-radius: 20rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2rpx solid var(--notion-border);
-  padding: 0 48rpx;
-  white-space: nowrap;
-}
-
-.submit-btn:active {
-  background: var(--color-warning-hover);
-}
-
-.submit-btn.half {
-  flex: 1;
-}
-
-.no-content {
+.empty,.loading{
   display: flex;
   justify-content: center;
   align-items: center;

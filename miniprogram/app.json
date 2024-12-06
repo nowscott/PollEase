@@ -8,9 +8,6 @@
   "window": {
     "backgroundColor": "@backgroundColor",
     "backgroundTextStyle": "@backgroundTextStyle",
-    "navigationBarBackgroundColor": "@navigationBarBackgroundColor",
-    "navigationBarTitleText": "投一下",
-    "navigationBarTextStyle": "@navigationBarTextStyle",
     "navigationStyle": "custom"
   },
   "darkmode": true,
@@ -25,20 +22,20 @@
     "list": [
       {
         "pagePath": "pages/home/index",
-        "text": "首页",
-        "iconPath": "images/home.png",
-        "selectedIconPath": "images/home-active.png"
+        "text": "",
+        "iconPath": "images/tapbar/home.png",
+        "selectedIconPath": "images/tapbar/home-active.png"
       },
       {
         "pagePath": "pages/templates/index",
-        "text": "新建",
-        "iconPath": "images/create.png",
-        "selectedIconPath": "images/create-active.png"
+        "text": "",
+        "iconPath": "images/tapbar/add.png",
+        "selectedIconPath": "images/tapbar/add-active.png"
       }
     ],
-    "color": "#aad08f",
-    "selectedColor": "#0e932e",
-    "backgroundColor": "@navBgColor",
+    "color": "#000",
+    "selectedColor": "#000",
+    "backgroundColor": "@tabBarBackgroundColor",
     "borderStyle": "@borderStyle"
   }
 }

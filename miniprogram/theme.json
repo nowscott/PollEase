@@ -3,28 +3,12 @@
     "backgroundColor": "#f7f6f3",
     "backgroundTextStyle": "dark",
     "borderStyle": "black",
-    "navigationBarBackgroundColor": "#f7f6f3",
-    "navigationBarTextStyle": "black",
-    "navBgColor": "#f7f6f3",
-    "navTextStyle": "black",
-    "notion-bg": "#f7f6f3",
-    "notion-text": "#2f3437",
-    "notion-text-light": "#787774",
-    "notion-border": "#e3e2e0",
-    "notion-white": "#fff"
+    "tabBarBackgroundColor": "#fff"
   },
   "dark": {
     "backgroundColor": "#1f1f1f",
     "backgroundTextStyle": "light",
     "borderStyle": "white",
-    "navigationBarBackgroundColor": "#1f1f1f",
-    "navigationBarTextStyle": "white",
-    "navBgColor": "#1f1f1f",
-    "navTextStyle": "white",
-    "notion-bg": "#1f1f1f",
-    "notion-text": "#e3e2e0",
-    "notion-text-light": "#999999",
-    "notion-border": "#2f2f2f",
-    "notion-white": "#2a2a2a"
+    "tabBarBackgroundColor": "#000"
   }
 } 
