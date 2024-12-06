@@ -32,13 +32,13 @@ Page({
     }
 
     this.setData({ pollId })
-    
+
     // 从本地存储获取投票状态
     const votedPolls = wx.getStorageSync('votedPolls') || {}
     const hasVoted = !!votedPolls[pollId]
 
     this.setData({ hasVoted })
-    
+
     // 确保云开发环境初始化
     if (!wx.cloud) {
       wx.cloud.init({
@@ -60,7 +60,7 @@ Page({
         poll: null,       // 清空投票数据
         loading: true     // 显示加载状态
       });
-      
+
       // 重新获取数据
       this.initPageData();
     }
@@ -71,7 +71,7 @@ Page({
     try {
       // 先尝试获取 openid
       const openid = await this.getUserInfo()
-      
+
       // 获取投票状态
       if (openid) {
         const { result } = await wx.cloud.callFunction({
@@ -80,12 +80,12 @@ Page({
             pollId: this.data.pollId
           }
         });
-        
+
         // 根据云函数返回结果设置投票状态
-        this.setData({ 
-          hasVoted: result && result.hasVoted 
+        this.setData({
+          hasVoted: result && result.hasVoted
         });
-        
+
         // 如果已投票，更新本地存储
         if (result && result.hasVoted) {
           const votedPolls = wx.getStorageSync('votedPolls') || {}
@@ -93,7 +93,7 @@ Page({
           wx.setStorageSync('votedPolls', votedPolls)
         }
       }
-      
+
       // 获取并刷新投票详情
       await this.fetchPollDetail()
     } catch (err) {
@@ -108,7 +108,7 @@ Page({
       const { result } = await wx.cloud.callFunction({
         name: 'getOpenid'
       })
-      
+
       if (result && result.openid) {
         this.setData({ openid: result.openid })
         return result.openid
@@ -124,9 +124,7 @@ Page({
   async submitVote(e) {
     // 使用原始索引而不是排序后的索引
     const optionIndex = e.currentTarget.dataset.originalIndex
-    
-    console.log('提交投票，选项索引:', optionIndex) // 添加日志便于调试
-    
+
     if (optionIndex === undefined || optionIndex === null) {
       wx.showToast({
         title: '无效的选项',
@@ -138,7 +136,7 @@ Page({
     wx.showLoading({
       title: '提交中...'
     })
-    
+
     try {
       // 如果没有 openid，尝试重新获取
       if (!this.data.openid) {
@@ -181,9 +179,9 @@ Page({
           icon: 'success'
         })
       }
-      
+
       await this.fetchPollDetail()
-      
+
     } catch (err) {
       console.error('提交投票失败:', err, '选项索引:', optionIndex)
       wx.hideLoading()
@@ -208,7 +206,7 @@ Page({
 
       const db = wx.cloud.database()
       const { data } = await db.collection('polls').doc(this.data.pollId).get()
-      
+
       if (!data) {
         throw new Error('投票不存在')
       }
@@ -243,7 +241,7 @@ Page({
       data.options.forEach((_, index) => {
         votes[index] = 0
       })
-      
+
       if (data.votes) {
         Object.keys(data.votes).forEach(key => {
           votes[key] = parseInt(data.votes[key]) || 0
@@ -282,12 +280,12 @@ Page({
     } catch (err) {
       console.error('获取投票详情失败:', err)
       wx.hideLoading()
-      
+
       this.setData({
         loading: false,
         error: err.message || '获取投票详情失败'
       })
-      
+
       wx.showToast({
         title: err.message || '加载失败，请重试',
         icon: 'none',
@@ -307,7 +305,7 @@ Page({
     const day = date.getDate().toString().padStart(2, '0')
     const hours = date.getHours().toString().padStart(2, '0')
     const minutes = date.getMinutes().toString().padStart(2, '0')
-    
+
     return `${year}-${month}-${day} ${hours}:${minutes}`
   },
 
@@ -317,17 +315,17 @@ Page({
     if (!poll || !poll.votes) {
       return '0%'
     }
-    
+
     const votes = poll.votes
     const currentVotes = votes[option.index] || 0
-    
+
     // 计算总票数
     const totalVotes = Object.values(votes).reduce((sum, count) => sum + count, 0)
-    
+
     if (totalVotes === 0) {
       return '0%'
     }
-    
+
     return Math.round((currentVotes / totalVotes) * 100) + '%'
   },
 
@@ -359,8 +357,18 @@ Page({
   },
 
   onBackButtonTap() {
-    wx.navigateBack({
-      delta: 1 
-    });
+    console.log('返回按钮点击事件触发');
+    const pages = getCurrentPages();
+    console.log('当前页面栈长度:', pages.length);
+    if (pages.length > 1) {
+      wx.navigateBack({
+        delta: 1 
+      });
+    } else {
+      console.log('没有上一级页面，返回首页');
+      wx.reLaunch({
+        url: '/pages/home/index' // 请确保此路径为首页路径
+      });
+    }
   }
 })
