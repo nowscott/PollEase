@@ -1,6 +1,15 @@
 export const pollTemplates = {
   templates: [
     {
+      id: 'blank',
+      template: {
+        title: '',
+        description: '',
+        options: ['', ''],
+        multiSelect: false
+      }
+    },
+    {
       id: 'milktea',
       template: {
         title: '喝点什么吧',

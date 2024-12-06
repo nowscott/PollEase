@@ -202,17 +202,26 @@ Page({
 
   // 跳转到投票详情页面
   goToPollDetail(e) {
-    const pollId = e.currentTarget.dataset.pollId
-    
+    const pollId = e.currentTarget.dataset.pollId;
+    console.log('Navigating to poll detail with pollId:', pollId);  
+
+    if (!pollId) {
+      console.error('Poll ID is missing!');
+      return;
+    }
+
     // 直接跳转
     wx.navigateTo({
-      url: `/pages/poll/detail/index?pollId=${pollId}`
-    })
-    
+      url: `/pages/detail/index?pollId=${pollId}`,
+      fail: function(err) {
+        console.error('Navigation failed:', err);  
+      }
+    });
+
     // 同时触发同步，不等待结果
-    const pollStorage = this.selectComponent('#pollStorage')
+    const pollStorage = this.selectComponent('#pollStorage');
     if (pollStorage) {
-      pollStorage.sync()
+      pollStorage.sync();
     }
   },
 

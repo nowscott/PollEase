@@ -18,8 +18,10 @@ Page({
 
     // 获取事件通道，需要判断是否存在
     const eventChannel = this.getOpenerEventChannel ? this.getOpenerEventChannel() : null;
+    console.log('Event channel:', eventChannel);  // 添加调试日志
     if (eventChannel && typeof eventChannel.on === 'function') {
       eventChannel.on('setTemplate', template => {
+        console.log('Received template:', template);  // 添加调试日志
         if (template) {
           const options = [...template.options, '']
           this.setData({

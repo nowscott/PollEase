@@ -30,12 +30,6 @@
         "selectedIconPath": "images/home-active.png"
       },
       {
-        "pagePath": "pages/create/index",
-        "text": "创建",
-        "iconPath": "images/create.png",
-        "selectedIconPath": "images/create-active.png"
-      },
-      {
         "pagePath": "pages/templates/index",
         "text": "模板",
         "iconPath": "images/templates.png",
