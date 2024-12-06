@@ -202,3 +202,11 @@
 .submit-btn.half {
   flex: 1;
 }
+
+.no-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #999;
+}

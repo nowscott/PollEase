@@ -16,6 +16,10 @@
         <button bindtap="fetchPollList" class="retry-btn">重新加载</button>
       </block>
 
+      <block wx:elif="{{!pollList || !pollList.length}}">
+        <view class="no-content">没有内容</view>
+      </block>
+
       <block wx:elif="{{pollList && pollList.length}}">
         <view 
           wx:for="{{pollList}}" 
