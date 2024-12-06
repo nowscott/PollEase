@@ -1,0 +1,150 @@
+<view class="container">
+  <poll-storage 
+    id="pollStorage"
+    openid="{{openid}}" 
+    bind:cacheUpdate="onCacheUpdate"
+  />
+
+  <scroll-view scroll-y class="poll-list">
+    <view class="poll-list-inner">
+      <block wx:if="{{loading}}">
+        <view class="loading">加载中...</view>
+      </block>
+
+      <block wx:elif="{{error}}">
+        <view class="error">{{error}}</view>
+        <button bindtap="fetchPollList" class="retry-btn">重新加载</button>
+      </block>
+
+      <block wx:elif="{{pollList && pollList.length}}">
+        <view 
+          wx:for="{{pollList}}" 
+          wx:key="_id"
+          class="poll-item-container"
+        >
+          <movable-area class="movable-area">
+            <movable-view 
+              class="movable-view"
+              direction="horizontal"
+              damping="20"
+              friction="2"
+              out-of-bounds="{{false}}"
+              x="{{item.xMove}}"<view class="container">
+                <!-- 投票存储组件：管理投票数据 -->
+                <poll-storage 
+                  id="pollStorage"
+                  openid="{{openid}}" 
+                  bind:cacheUpdate="onCacheUpdate"
+                />
+                <!-- 主滚动视图：包含投票列表 -->
+                <scroll-view scroll-y class="poll-list">
+                  <view class="poll-list-inner">
+                    <!-- 加载状态 -->
+                    <block wx:if="{{loading}}">
+                      <view class="loading">加载中...</view>
+                    </block>
+                    <!-- 错误状态 -->
+                    <block wx:elif="{{error}}">
+                      <view class="error">{{error}}</view>
+                      <button bindtap="fetchPollList" class="retry-btn">重新加载</button>
+                    </block>
+                    <!-- 投票列表显示 -->
+                    <block wx:elif="{{pollList && pollList.length}}">
+                      <view 
+                        wx:for="{{pollList}}" 
+                        wx:key="_id"
+                        class="poll-item-container"
+                      >
+                        <!-- 可移动区域：允许滑动操作 -->
+                        <movable-area class="movable-area">
+                          <movable-view 
+                            class="movable-view"
+                            direction="horizontal"
+                            damping="20"
+                            friction="2"
+                            out-of-bounds="{{false}}"
+                            x="{{item.xMove}}"
+                            inertia="{{true}}"
+                            disabled="{{item.xMove > 0}}"
+                            data-index="{{index}}"
+                            bindtouchstart="handleTouchStart"
+                            bindtouchmove="handleTouchMove"
+                            bindtouchend="handleTouchEnd"
+                            bindchange="onMovableChange"
+                          >
+                            <view class="content-wrapper">
+                              <!-- 投票项：显示投票详情 -->
+                              <view 
+                                class="poll-item"
+                                catch:tap="goToPollDetail"
+                                data-poll-id="{{item._id}}"
+                              >
+                                <text class="poll-title">{{item.title}}</text>
+                                <view class="poll-info">
+                                  <text class="poll-time">截止时间：{{item.endTimeStr}}</text>
+                                  <text class="poll-count">{{item.totalVotes}}票</text>
+                                </view>
+                              </view>
+                              <!-- 删除按钮：允许删除投票项 -->
+                              <view 
+                                class="delete-btn {{item.deleteWidth > deleteWidth * 2 ? 'will-delete' : (item.deleteWidth > deleteWidth ? 'stretching' : '')}}"
+                                style="width: {{item.deleteWidth}}rpx"
+                                data-id="{{item._id}}"
+                                data-index="{{index}}"
+                                catch:tap="handleDelete"
+                              >{{item.deleteWidth > deleteWidth * 2 ? '释放立即删除' : '删除'}}</view>
+                            </view>
+                          </movable-view>
+                        </movable-area>
+                      </view>
+                    </block>
+                    <!-- 空状态：没有可用投票 -->
+                    <block wx:else>
+                      <view class="empty">
+                        <text>暂无投票，点击下方按钮创建</text>
+                      </view>
+                    </block>
+                  </view>
+                </scroll-view>
+              </view>
+              inertia="{{true}}"
+              disabled="{{item.xMove > 0}}"
+              data-index="{{index}}"
+              bindtouchstart="handleTouchStart"
+              bindtouchmove="handleTouchMove"
+              bindtouchend="handleTouchEnd"
+              bindchange="onMovableChange"
+            >
+              <view class="content-wrapper">
+                <view 
+                  class="poll-item"
+                  catch:tap="goToPollDetail"
+                  data-poll-id="{{item._id}}"
+                >
+                  <text class="poll-title">{{item.title}}</text>
+                  <view class="poll-info">
+                    <text class="poll-time">截止时间：{{item.endTimeStr}}</text>
+                    <text class="poll-count">{{item.totalVotes}}票</text>
+                  </view>
+                </view>
+                <view 
+                  class="delete-btn {{item.deleteWidth > deleteWidth * 2 ? 'will-delete' : (item.deleteWidth > deleteWidth ? 'stretching' : '')}}"
+                  style="width: {{item.deleteWidth}}rpx"
+                  data-id="{{item._id}}"
+                  data-index="{{index}}"
+                  catch:tap="handleDelete"
+                >{{item.deleteWidth > deleteWidth * 2 ? '释放立即删除' : '删除'}}</view>
+              </view>
+            </movable-view>
+          </movable-area>
+        </view>
+      </block>
+
+      <block wx:else>
+        <view class="empty">
+          <text>暂无投票，点击下方按钮创建</text>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+</view>

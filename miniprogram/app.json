@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/poll/list/index",
-    "pages/poll/create/index",
-    "pages/poll/detail/index",
-    "pages/poll/templates/index"
+    "pages/home/index",
+    "pages/create/index",
+    "pages/detail/index",
+    "pages/templates/index"
   ],
   "window": {
     "backgroundColor": "@backgroundColor",
@@ -11,7 +11,7 @@
     "navigationBarBackgroundColor": "@navigationBarBackgroundColor",
     "navigationBarTitleText": "投一下",
     "navigationBarTextStyle": "@navigationBarTextStyle",
-    "navigationStyle": "default"
+    "navigationStyle": "custom"
   },
   "darkmode": true,
   "themeLocation": "theme.json",
@@ -20,5 +20,31 @@
   "lazyCodeLoading": "requiredComponents",
   "useExtendedLib": {
     "weui": true
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/create/index",
+        "text": "创建",
+        "iconPath": "images/create.png",
+        "selectedIconPath": "images/create-active.png"
+      },
+      {
+        "pagePath": "pages/templates/index",
+        "text": "模板",
+        "iconPath": "images/templates.png",
+        "selectedIconPath": "images/templates-active.png"
+      }
+    ],
+    "color": "#2f3437",
+    "selectedColor": "#1296db",
+    "backgroundColor": "#f7f6f3",
+    "borderStyle": "black"
   }
 }

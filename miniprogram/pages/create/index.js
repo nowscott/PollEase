@@ -17,8 +17,8 @@ Page({
     }
 
     // 获取事件通道，需要判断是否存在
-    const eventChannel = this.getOpenerEventChannel && this.getOpenerEventChannel()
-    if (eventChannel) {
+    const eventChannel = this.getOpenerEventChannel ? this.getOpenerEventChannel() : null;
+    if (eventChannel && typeof eventChannel.on === 'function') {
       eventChannel.on('setTemplate', template => {
         if (template) {
           const options = [...template.options, '']
@@ -183,7 +183,7 @@ Page({
       if (result._id) {
         // 获取列表页实例
         const pages = getCurrentPages()
-        const listPage = pages.find(p => p.route === 'pages/poll/list/index')
+        const listPage = pages.find(p => p.route === 'pages/poll/home/index')
         
         if (listPage) {
           // 获取 poll-storage 组件
@@ -215,7 +215,7 @@ Page({
         setTimeout(() => {
           // 先清除当前页面栈，再跳转到详情页
           wx.reLaunch({
-            url: `/pages/poll/detail/index?pollId=${result._id}`
+            url: `/pages/detail/index?pollId=${result._id}`
           })
         }, 1500)
       }

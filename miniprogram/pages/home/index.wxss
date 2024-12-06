@@ -12,6 +12,7 @@
 .poll-list {
   height: 60vh;
   margin: 0;
+  margin-top: 100rpx;
 }
 
 /* scroll-view 的容器 */

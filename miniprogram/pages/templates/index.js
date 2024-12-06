@@ -18,7 +18,7 @@ Page({
       description: selectedTemplate.template.description || ''
     };
     wx.navigateTo({
-      url: '/pages/poll/create/index',
+      url: '/pages/create/index',
       success: function(res) {
         res.eventChannel.emit('setTemplate', template)
       }

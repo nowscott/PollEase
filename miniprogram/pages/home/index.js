@@ -200,13 +200,6 @@ Page({
     return `${year}-${month}-${day} ${hours}:${minutes}`
   },
 
-  // 跳转到创建投票页面
-  goToCreate() {
-    wx.navigateTo({
-      url: '/pages/poll/create/index'
-    })
-  },
-
   // 跳转到投票详情页面
   goToPollDetail(e) {
     const pollId = e.currentTarget.dataset.pollId
@@ -288,12 +281,6 @@ Page({
     }))
 
     this.setData({ pollList })
-  },
-
-  goToTemplates() {
-    wx.navigateTo({
-      url: '/pages/poll/templates/index'
-    })
   },
 
   // 处理投票数据的公共方法

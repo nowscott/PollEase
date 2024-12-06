@@ -344,7 +344,7 @@ Page({
     const { poll, pollId } = this.data
     return {
       title: poll ? poll.title : '邀请你参与投票',
-      path: `/pages/poll/detail/index?pollId=${pollId}`,
+      path: `/pages/detail/index?pollId=${pollId}`,
       imageUrl: '/images/share-default.png'
     }
   },
