@@ -1,4 +1,4 @@
-import { pollTemplates } from '../../../config/poll-templates';
+import { pollTemplates } from '../../config/poll-templates';
 
 Page({
   data: {
