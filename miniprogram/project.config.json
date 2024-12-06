@@ -10,5 +10,13 @@
     "enhance": true
   },
   "libVersion": "3.0.0",
-  "checkSiteMap": false
+  "checkSiteMap": false,
+  "cloudfunctionRoot": "cloudfunctions/",
+  "cloudfunctions": {
+    "getUserVoteStatus": {
+      "permissions": {
+        "openapi": []
+      }
+    }
+  }
 } 

@@ -167,13 +167,22 @@ Page({
   // 处理删除
   handleDelete(e) {
     const index = e.currentTarget.dataset.index;
+    const poll = this.data.pollList?.[index];
+    
+    if (!poll || !poll._id) {
+      wx.showToast({
+        title: '投票数据无效',
+        icon: 'none'
+      });
+      return;
+    }
+
     wx.showModal({
       title: '确认删除',
       content: '您确定要删除这个投票吗？',
       success: (res) => {
         if (res.confirm) {
-          const pollId = this.data.pollList[index]._id;
-          this.deletePoll(pollId);
+          this.deletePoll(poll._id);
         }
       }
     });

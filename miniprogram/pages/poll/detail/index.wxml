@@ -31,10 +31,10 @@
         </view>
 
         <view class="poll-options">
-          <block wx:for="{{poll.sortedOptions}}" wx:key="index">
+          <block wx:for="{{poll.sortedOptions}}" wx:key="originalIndex">
             <view 
               class="option {{hasVoted || isExpired ? 'disabled' : 'can-vote'}}"
-              data-original-index="{{item.index}}"
+              data-original-index="{{item.originalIndex}}"
               hover-class="{{(!hasVoted && !isExpired) ? 'option-hover' : ''}}"
               bindtap="{{(!hasVoted && !isExpired) ? 'submitVote' : ''}}"
             >

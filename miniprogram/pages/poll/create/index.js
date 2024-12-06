@@ -213,7 +213,8 @@ Page({
 
         // 延迟跳转，让用户看到成功提示
         setTimeout(() => {
-          wx.redirectTo({
+          // 先清除当前页面栈，再跳转到详情页
+          wx.reLaunch({
             url: `/pages/poll/detail/index?pollId=${result._id}`
           })
         }, 1500)

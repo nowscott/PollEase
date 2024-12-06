@@ -26,6 +26,12 @@ Page({
 
     this.setData({ pollId })
     
+    // 从本地存储获取投票状态
+    const votedPolls = wx.getStorageSync('votedPolls') || {}
+    const hasVoted = !!votedPolls[pollId]
+
+    this.setData({ hasVoted })
+    
     // 确保云开发环境初始化
     if (!wx.cloud) {
       wx.cloud.init({
@@ -34,25 +40,54 @@ Page({
       })
     }
 
-    // 初始化页面数据
     this.initPageData()
   },
 
-  // 添加 onShow 生命周期
+  // 修改 onShow 生命周期函数
   onShow() {
-    // 如果已经有 pollId，重新加载数据
+    // 每次显示页面时都重新初始化数据
     if (this.data.pollId) {
-      this.initPageData()
+      // 重置状态
+      this.setData({
+        hasVoted: false,  // 重置投票状态
+        poll: null,       // 清空投票数据
+        loading: true     // 显示加载状态
+      });
+      
+      // 重新获取数据
+      this.initPageData();
     }
   },
 
-  // 新增初始化方法
+  // 修改 initPageData 方法，确保每次都重新获取投票状态
   async initPageData() {
     try {
       // 先尝试获取 openid
       const openid = await this.getUserInfo()
       
-      // 无论是否获取到 openid，都继续加载投票详情
+      // 获取投票状态
+      if (openid) {
+        const { result } = await wx.cloud.callFunction({
+          name: 'getUserVoteStatus',
+          data: {
+            pollId: this.data.pollId
+          }
+        });
+        
+        // 根据云函数返回结果设置投票状态
+        this.setData({ 
+          hasVoted: result && result.hasVoted 
+        });
+        
+        // 如果已投票，更新本地存储
+        if (result && result.hasVoted) {
+          const votedPolls = wx.getStorageSync('votedPolls') || {}
+          votedPolls[this.data.pollId] = true
+          wx.setStorageSync('votedPolls', votedPolls)
+        }
+      }
+      
+      // 获取并刷新投票详情
       await this.fetchPollDetail()
     } catch (err) {
       console.error('初始化页面失败:', err)
@@ -80,7 +115,7 @@ Page({
 
   // 修改提交投票的方法
   async submitVote(e) {
-    // 确保正确获取 optionIndex
+    // 使用原始索引而不是排序后的索引
     const optionIndex = e.currentTarget.dataset.originalIndex
     
     console.log('提交投票，选项索引:', optionIndex) // 添加日志便于调试
@@ -124,22 +159,22 @@ Page({
         }
       })
 
-      wx.hideLoading()
-      
-      if (result.error) {
-        wx.showToast({
-          title: result.error,
-          icon: 'none'
-        })
-        return
-      }
+      if (result.success) {
+        // 保存投票状态到本地存储
+        const votedPolls = wx.getStorageSync('votedPolls') || {}
+        votedPolls[this.data.pollId] = true
+        wx.setStorageSync('votedPolls', votedPolls)
 
-      wx.showToast({
-        title: '投票成功',
-        icon: 'success'
-      })
+        this.setData({
+          hasVoted: true
+        })
+
+        wx.showToast({
+          title: '投票成功',
+          icon: 'success'
+        })
+      }
       
-      // 重新加载投票详情以更新显示
       await this.fetchPollDetail()
       
     } catch (err) {
@@ -191,7 +226,18 @@ Page({
           }
           return voter && voter.openid === this.data.openid
         })
+
+        // 如果在数据库中发现已投票，更新本地存储
+        if (hasVoted) {
+          const votedPolls = wx.getStorageSync('votedPolls') || {}
+          votedPolls[this.data.pollId] = true
+          wx.setStorageSync('votedPolls', votedPolls)
+        }
       }
+
+      // 如果本地存储显示已投票，也将状态设置为已投票
+      const votedPolls = wx.getStorageSync('votedPolls') || {}
+      hasVoted = hasVoted || !!votedPolls[this.data.pollId]
 
       // 初始化投票数据
       const votes = {}
@@ -205,17 +251,18 @@ Page({
         })
       }
 
-      // 处理选项排序 - 直接按票数排序，不需要条件判断
+      // 修改选项排序逻辑 - 始终按票数降序排序
       const sortedOptions = data.options.map((option, index) => ({
         text: option,
-        index: index,
+        originalIndex: index,  // 保存原始索引用于提交投票
         votes: votes[index] || 0
       })).sort((a, b) => {
-        if (b.votes === a.votes) {
-          // 票数相同时，保持原有顺序
-          return a.index - b.index
+        // 首先按票数降序
+        if (b.votes !== a.votes) {
+          return b.votes - a.votes
         }
-        return b.votes - a.votes
+        // 票数相同时，保持原始顺序
+        return a.originalIndex - b.originalIndex
       })
 
       this.setData({
@@ -228,7 +275,7 @@ Page({
           voterCount: data.voters ? data.voters.length : 0
         },
         isExpired,
-        hasVoted,
+        hasVoted: hasVoted,  // 使用更新后的 hasVoted 值
         loading: false
       })
 
@@ -299,6 +346,23 @@ Page({
       title: poll ? poll.title : '邀请你参与投票',
       path: `/pages/poll/detail/index?pollId=${pollId}`,
       imageUrl: '/images/share-default.png'
+    }
+  },
+
+  // 添加新的方法来检查用户投票状态
+  async checkUserVoteStatus(pollId) {
+    try {
+      const db = wx.cloud.database();
+      const userInfo = await wx.cloud.callFunction({
+        name: 'getUserVoteStatus',
+        data: {
+          pollId: pollId
+        }
+      });
+      return userInfo.result;
+    } catch (error) {
+      console.error('获取用户投票状态失败：', error);
+      return { hasVoted: false };
     }
   }
 })
