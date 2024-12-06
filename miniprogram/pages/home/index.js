@@ -21,7 +21,6 @@ Page({
       tabBarHeight: app.globalData.tabBarHeight,
       pageHeight: app.globalData.pageHeight
     });
-
     // 获取用户信息
     this.getUserInfo().then(() => {
       // 从本地缓存加载数据

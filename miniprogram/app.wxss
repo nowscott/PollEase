@@ -7,6 +7,7 @@ page {
   --subTextColor: rgba(0, 0, 0, 0.6); /* 黑色的 60% 不透明度 */
   --btnColor: #8a8a8a;
   --btnSelected: #eeb172;
+  --borderColor: #8a8a8a;
   --color-error: #ff4d4f;
   --color-success: #6bb56d;
   --color-warning: #fff9e6;

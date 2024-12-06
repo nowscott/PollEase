@@ -1,29 +1,23 @@
-.page-wrapper {
-  background-color: var(--notion-bg);
-  min-height: 100vh;
-  color: var(--textColor);
-}
-
+/* 整体容器 */
 .container {
-  min-height: 100vh;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-.poll-header {
+  padding: 0;
   margin: 0;
-  padding: 100rpx 48rpx 48rpx;
-  width: 100%;
-  box-sizing: border-box;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  background-color: var(--bgColor);
 }
 
-.poll-title {
-  font-size: var(--font-large);
-  font-weight: 600;
+/* 标题区域 */
+.title {
+  width: 100%;
+  font-size: var(--font-xlarge);
   color: var(--textColor);
-  line-height: 1.3;
-  letter-spacing: -0.02em;
+}
+
+.title-text {
+  display: inline-block;
+  padding: 0 var(--spacing-left);
 }
 
 .template-list {
@@ -34,24 +28,22 @@
 }
 
 .template-item {
-  background: var(--notion-white);
+  background: #fff;
   padding: 24rpx;
   border-radius: 20rpx;
-  border: 2rpx solid var(--notion-border);
-  transition: all 0.2s ease;
   height: 100%;
   box-sizing: border-box;
   display: flex;
-}
-
-.template-item-hover {
-  background: var(--notion-hover);
-  transform: scale(0.98);
+  border: 1px dashed var(--borderColor);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease
 }
 
 .template-content {
   flex: 1;
   display: flex;
+  width: 100%;
   flex-direction: column;
 }
 
@@ -73,13 +65,16 @@
 
 .template-desc {
   font-size: var(--font-normal);
-  color: var(--textColor-light);
+  color: var(--subTextColor);
   margin-bottom: 16rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .template-options {
   font-size: var(--font-small);
-  color: var(--textColor-light);
+  color: var(--subTextColor);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -91,4 +86,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
- 
+
+.add-icon {
+  font-size: 48rpx;
+  color: var(--textColor);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
