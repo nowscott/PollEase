@@ -13,6 +13,14 @@ Page({
   },
 
   onLoad(options) {
+    // 获取全局数据
+    const app = getApp();
+    this.setData({
+      statusBarHeight: app.globalData.statusBarHeight,
+      titleBarHeight: app.globalData.titleBarHeight,
+      tabBarHeight: app.globalData.tabBarHeight,
+      pageHeight: app.globalData.pageHeight
+    });
     const { pollId } = options
     if (!pollId) {
       wx.showModal({
@@ -364,5 +372,11 @@ Page({
       console.error('获取用户投票状态失败：', error);
       return { hasVoted: false };
     }
+  },
+
+  onBackButtonTap() {
+    wx.navigateBack({
+      delta: 1 
+    });
   }
 })

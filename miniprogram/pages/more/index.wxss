@@ -11,8 +11,7 @@
 /* 标题区域 */
 .title {
   width: 100%;
-  font-size: var(--font-xlarge);
-  color: var(--textColor);
+  margin: 0;
 }
 
 .title-text {

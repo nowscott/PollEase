@@ -26,7 +26,7 @@ Page({
       description: selectedTemplate.template.description || ''
     };
     wx.navigateTo({
-      url: '/pages/create/index',
+      url: '/pages/add/index',
       success: function (res) {
         res.eventChannel.emit('setTemplate', template)
       },

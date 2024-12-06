@@ -3,7 +3,6 @@ Page({
     title: '',
     options: ['', ''],  // 默认两个空选项
     canSubmit: false,
-    pollOptions: ['', ''],
     templateId: null,
     templateData: null,
     description: '',
@@ -11,11 +10,18 @@ Page({
   },
 
   onLoad(options) {
+    // 获取全局数据
+    const app = getApp();
+    this.setData({
+      statusBarHeight: app.globalData.statusBarHeight,
+      titleBarHeight: app.globalData.titleBarHeight,
+      tabBarHeight: app.globalData.tabBarHeight,
+      pageHeight: app.globalData.pageHeight
+    });
     const { templateId } = options
     if (templateId) {
       this.loadTemplateData(templateId)
     }
-
     // 获取事件通道，需要判断是否存在
     const eventChannel = this.getOpenerEventChannel ? this.getOpenerEventChannel() : null;
     console.log('Event channel:', eventChannel);  // 添加调试日志
@@ -43,7 +49,7 @@ Page({
       const { result } = await wx.cloud.callFunction({
         name: 'getOpenid'
       })
-      
+
       if (!result || !result.openid) {
         throw new Error('无法获取用户标识')
       }
@@ -96,12 +102,12 @@ Page({
     const { value } = e.detail
     const options = [...this.data.options]
     options[index] = value.trim()
-    
+
     // 如果当前输入的是最后一个选项，且有内容，则自动添加新选项
     if (index === options.length - 1 && value.trim() && options.length < 10) {
       options.push('')
     }
-    
+
     this.setData({ options })
     this.checkCanSubmit()
   },
@@ -122,7 +128,7 @@ Page({
   removeOption(e) {
     const { index } = e.currentTarget.dataset
     const options = this.data.options.filter((_, i) => i !== index)
-    
+
     this.setData({ options })
     this.checkCanSubmit()
   },
@@ -130,7 +136,7 @@ Page({
   checkCanSubmit() {
     const titleValid = this.data.title.length > 0
     const optionsValid = this.data.options.filter(opt => opt.trim().length > 0).length >= 2
-    
+
     this.setData({
       canSubmit: titleValid && optionsValid
     })
@@ -181,12 +187,12 @@ Page({
       })
 
       wx.hideLoading()
-      
+
       if (result._id) {
         // 获取列表页实例
         const pages = getCurrentPages()
         const listPage = pages.find(p => p.route === 'pages/poll/home/index')
-        
+
         if (listPage) {
           // 获取 poll-storage 组件
           const pollStorage = listPage.selectComponent('#pollStorage')
@@ -236,5 +242,11 @@ Page({
     this.setData({
       description: e.detail.value
     })
+  },
+
+  onBackButtonTap() {
+    wx.navigateBack({
+      delta: 1 // Go back one page
+    });
   }
 })

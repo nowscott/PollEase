@@ -11,8 +11,7 @@
 /* 标题区域 */
 .title {
   width: 100%;
-  font-size: var(--font-xlarge);
-  color: var(--textColor);
+  margin: 0;
 }
 
 .title-text {
@@ -28,7 +27,7 @@
 }
 
 .template-item {
-  background: #fff;
+  background: var(--templatrsColor);
   padding: 24rpx;
   border-radius: 20rpx;
   height: 100%;

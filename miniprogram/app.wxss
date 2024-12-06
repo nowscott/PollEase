@@ -5,9 +5,11 @@ page {
   --dividerColor: #d6d3cb;
   --textColor: #000;
   --subTextColor: rgba(0, 0, 0, 0.6); /* 黑色的 60% 不透明度 */
+  --inputBgColor: #fff;
+  --templatrsColor: #fff;
   --btnColor: #8a8a8a;
   --btnSelected: #eeb172;
-  --borderColor: #8a8a8a;
+  --borderColor: #d6d3cb;
   --color-error: #ff4d4f;
   --color-success: #6bb56d;
   --color-warning: #fff9e6;
@@ -19,10 +21,21 @@ page {
 @media (prefers-color-scheme: dark) {
   page {
     --bgColor: #3a3937;
+    --dividerColor: #6b685f;
     --textColor: #6a6965;
     --subTextColor: rgba(255, 255, 255, 0.6);/* 白色的 60% 不透明度 */
+    --inputBgColor: #000;
+    --templatrsColor: #000;
+    --borderColor: #6b685f;
   }
 }
+
+.title {
+  font-size: var(--font-xlarge);
+  font-weight: 600;
+  color: var(--textColor);
+}
+
 page {
   /* 全局背景色和文字颜色 */
   color: var(--textColor);
@@ -77,87 +90,6 @@ page {
   }
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-  min-height: 100vh;
-  padding: 24rpx;
-}
-
-/* 按钮样式 */
-button {
-  color: var(--textCol);
-  border: 1px solid var(--notion-border);
-  border-radius: 6rpx;
-  padding: 16rpx 24rpx;
-  font-size: var(--font-normal);
-  transition: all 0.2s ease;
-  font-weight: 400;
-  letter-spacing: 0.3px;
-}
-
-button:active {
-  background: var(--notion-hover);
-}
-
-button:focus {
-  outline: 0;
-}
-
-button::after {
-  border: none;
-}
-
-/* 输入框样式 */
-input {
-  background: var(--notion-white);
-  border: 1px solid var(--notion-border);
-  border-radius: 6rpx;
-  padding: 16rpx;
-  color: var(--textColo r);
-  font-size: var(--font-normal);
-  letter-spacing: 0.2px;
-}
-
-/* 标题样式 */
-.title {
-  font-size: var(--font-large);
-  font-weight: 600;
-  color: var(--textColor);
-  margin-bottom: 24rpx;
-}
-
-/* 卡片样式 */
-.card {
-  background: var(--notion-white);
-  border: 1px solid var(--notion-border);
-  border-radius: 12rpx;
-  padding: 24rpx;
-  margin-bottom: 24rpx;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* 标签样式 */
-.tag {
-  display: inline-block;
-  padding: 4rpx 12rpx;
-  border-radius: 4rpx;
-  font-size: 24rpx;
-  background: var(--notion-hover);
-  color: var(--textColor-light);
-}
-
-/* 分割线样式 */
-.divider {
-  height: 1px;
-  background: var(--notion-border);
-  width: 100%;
-  margin: 24rpx 0;
-}
-
 /* 添加深色模式变量 */
 @media (prefers-color-scheme: dark) {
   page {
@@ -176,18 +108,6 @@ input {
     --color-disabled-text: #999999;
     --color-border-light: #333333;
   }
-}
-
-/* 按钮文字样式优化 */
-button {
-  font-weight: 400;
-  letter-spacing: 0.3px;
-}
-
-/* 输入框文字样式优化 */
-input {
-  font-size: var(--font-normal);
-  letter-spacing: 0.2px;
 }
 
 /* 定义自定义字体 */

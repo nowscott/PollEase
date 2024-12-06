@@ -13,6 +13,7 @@ Page({
   },
 
   onLoad() {
+    this.performFullSync();
     // 获取全局数据
     const app = getApp();
     this.setData({
@@ -23,7 +24,6 @@ Page({
     });
     // 获取用户信息
     this.getUserInfo().then(() => {
-      // 从本地缓存加载数据
       const pollStorage = this.selectComponent('#pollStorage');
       if (pollStorage) {
         const cacheData = pollStorage.loadFromCache();
@@ -35,8 +35,35 @@ Page({
 
   onShow() {
     if (this.data.needRefresh) {
-      this.fetchPollList()
-      this.setData({ needRefresh: false })
+      this.setData({ needRefresh: false });
+      this.fetchPollList(true);
+    }
+  },
+
+  async performFullSync() {
+    const pollStorage = this.selectComponent('#pollStorage');
+    if (!pollStorage) {
+      console.error('pollStorage 组件未找到');
+      return;
+    }
+
+    try {
+      await pollStorage.sync(); // 全量同步服务器数据
+      const cache = pollStorage.getCache();
+
+      if (cache && cache.data) {
+        this.processPollData(cache.data);
+        wx.showToast({
+          title: '数据已更新',
+          icon: 'success',
+        });
+      }
+    } catch (err) {
+      console.error('全量更新失败:', err);
+      wx.showToast({
+        title: '全量更新失败，请稍后重试',
+        icon: 'none',
+      });
     }
   },
 
@@ -48,94 +75,63 @@ Page({
         config: {
           env: wx.cloud.DYNAMIC_CURRENT_ENV
         }
-      })
+      });
 
       if (!result || !result.openid) {
-        throw new Error('无法获取用户标识')
+        throw new Error('无法获取用户标识');
       }
 
-      this.setData({ openid: result.openid })
-      return result.openid
+      this.setData({ openid: result.openid });
+      return result.openid;
 
     } catch (err) {
-      this.handleError('获取用户信息失败', err)
-      return null
+      this.handleError('获取用户信息失败', err);
+      return null;
     }
   },
 
   // 获取投票列表
   async fetchPollList(silent = false) {
-    if (!this.data.openid) return
-
+    if (!this.data.openid) return;
     if (!silent) {
-      this.setData({ loading: true })
+      this.setData({ loading: true });
     }
-
-    const pollStorage = this.selectComponent('#pollStorage')
-
+    const pollStorage = this.selectComponent('#pollStorage');
     if (!pollStorage) {
-      console.error('poll-storage 组件未找到')
-      this.setData({ loading: false })
-      return
+      console.error('pollStorage 组件未找到');
+      this.setData({ loading: false });
+      return;
     }
-
     try {
-      await pollStorage.sync()
+      await pollStorage.sync();
+      const cache = pollStorage.getCache();
 
-      const cache = pollStorage.getCache()
-      this.processPollData(cache.data)
-
+      console.log('增量同步后数据:', cache.data); // 调试输出
+      this.processPollData(cache.data);
     } catch (err) {
-      console.error('获取列表失败:', err)
-      this.handleError('获取列表失败', err)
-      this.setData({ loading: false })
+      console.error('获取列表失败:', err);
+      this.handleError('获取列表失败', err);
+    } finally {
+      if (!silent) {
+        this.setData({ loading: false });
+      }
     }
   },
 
   // 跳转到投票详情页面
   goToPollDetail(e) {
     const pollId = e.currentTarget.dataset.pollId;
-    console.log('Navigating to poll detail with pollId:', pollId);
-
     if (!pollId) {
       console.error('Poll ID is missing!');
       return;
     }
 
-    // 直接跳转
     wx.navigateTo({
       url: `/pages/detail/index?pollId=${pollId}`,
       fail: function (err) {
         console.error('Navigation failed:', err);
       }
     });
-
-    // 同时触发同步，不等待结果
-    const pollStorage = this.selectComponent('#pollStorage');
-    if (pollStorage) {
-      pollStorage.sync();
-    }
-  },
-
-  // 删除投票
-  async deletePoll(pollId) {
-    try {
-      const db = wx.cloud.database()
-      await db.collection('polls').doc(pollId).remove()
-
-      // 使用 id 选择器
-      const pollStorage = this.selectComponent('#pollStorage')
-      if (pollStorage) {
-        pollStorage.removeFromCache(pollId)
-      }
-
-      wx.showToast({
-        title: '删除成功',
-        icon: 'success'
-      })
-    } catch (err) {
-      this.handleError('删除失败', err)
-    }
   },
 
   // 统一错误处理方法
@@ -143,7 +139,7 @@ Page({
     wx.showToast({
       title: message,
       icon: 'none'
-    })
+    });
   },
 
   // 日期格式化方法
@@ -171,9 +167,17 @@ Page({
   },
 
   // 处理投票数据的公共方法
-  processPollData(data) {
-    const { openid, selected } = this.data;
-    const pollList = (data || []).filter(poll => {
+  processPollData(newData) {
+    const { openid, selected, pollList: existingData } = this.data;
+    // 合并新旧数据，按 ID 去重
+  const mergedData = [...newData, ...existingData].reduce((acc, poll) => {
+    if (!acc.some(item => item._id === poll._id)) {
+      acc.push(poll);
+    }
+    return acc;
+  }, []);
+
+    const pollList = (mergedData || []).filter(poll => {
       if (selected === 'initiated') {
         return poll.creatorId === openid;
       } else if (selected === 'joined') {
@@ -182,15 +186,17 @@ Page({
       return false;
     }).map(poll => ({
       ...poll,
-      totalVotes: poll.votes ?
-        Object.values(poll.votes).reduce((a, b) => a + b, 0) : 0,
-      endTimeStr: this.formatDate(poll.endTime),
-      title: this.truncateText(poll.title), // 使用截断函数处理标题
+      totalVotes: poll.votes
+        ? Object.values(poll.votes).reduce((a, b) => a + b, 0)
+        : 0,
+      endTimeStr: poll.endTime ? this.formatDate(poll.endTime) : '未设置截止时间',
+      title: this.truncateText(poll.title),
     }));
+
     this.setData({
       pollList,
       loading: false,
-      error: null
+      error: null,
     });
   },
 
@@ -200,47 +206,16 @@ Page({
     this.setData({ pollList: data });
   },
 
-  // 跳转到投票详情页面
-  goToPollDetail(e) {
-    const pollId = e.currentTarget.dataset.pollId;
-    console.log('Navigating to poll detail with pollId:', pollId);
-
-    if (!pollId) {
-      console.error('Poll ID is missing!');
-      return;
-    }
-
-    // 直接跳转
-    wx.navigateTo({
-      url: `/pages/detail/index?pollId=${pollId}`,
-      fail: function (err) {
-        console.error('Navigation failed:', err);
-      }
-    });
-
-    // 同时触发同步，不等待结果
-    const pollStorage = this.selectComponent('#pollStorage');
-    if (pollStorage) {
-      pollStorage.sync();
-    }
-  },
-
   // 切换到我发起的投票
   selectInitiated() {
     this.setData({ selected: 'initiated' });
-    this.fetchPollList();
+    this.fetchPollList(true);
   },
 
   // 切换到我参与的投票
   selectJoined() {
     this.setData({ selected: 'joined' });
-    this.fetchPollList();
+    this.fetchPollList(true);
   },
 
-  // Example usage within a Page method
-  exampleUsage() {
-    let pollTitle = "这里是一个非常长的轮询标题示例，应该被截断";
-    let displayTitle = this.truncateText(pollTitle);
-    console.log(displayTitle); // 输出: "这里是一个非常长的..."
-  },
-})
+});
