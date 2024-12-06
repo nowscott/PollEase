@@ -357,15 +357,12 @@ Page({
   },
 
   onBackButtonTap() {
-    console.log('返回按钮点击事件触发');
     const pages = getCurrentPages();
-    console.log('当前页面栈长度:', pages.length);
     if (pages.length > 1) {
       wx.navigateBack({
         delta: 1 
       });
     } else {
-      console.log('没有上一级页面，返回首页');
       wx.reLaunch({
         url: '/pages/home/index' // 请确保此路径为首页路径
       });

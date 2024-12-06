@@ -12,6 +12,7 @@
 .title {
   width: 100%;
   margin: 0;
+  flex-shrink: 0;
 }
 
 .title-text {
@@ -29,7 +30,9 @@
   border: 2rpx dashed var(--borderColor);
   overflow: hidden;
   box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
-  margin: auto;
+  margin: 20rpx auto;
+  flex-shrink: 0;
+  width: fit-content;
 }
 
 /* 按钮基础样式 */
@@ -52,14 +55,14 @@
 
 /* 列表区域 */
 .poll-list {
-  background: var(--bgColor);
-  width: 100%;
   flex: 1;
+  overflow: hidden;
+  position: relative;
 }
 
 /* 投票项容器 */
 .poll-item-container {
-  padding: var(--spacing-left);
+  padding: 0 var(--spacing-left);
 }
 
 /* 内容包装器 */
@@ -73,7 +76,7 @@
   flex: 1;
   box-sizing: border-box;
   background: var(--listBackgroundColor);
-  padding: 20rpx 0;
+  padding: var(--spacing-left) 0;
   border-bottom: 3rpx dashed var(--dividerColor);
 }
 

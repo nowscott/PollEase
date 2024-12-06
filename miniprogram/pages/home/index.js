@@ -146,7 +146,8 @@ Page({
       }
     };
 
-    const formatPoll = ({ creatorId, voters, votes, endTime, title }) => ({
+    const formatPoll = ({ _id, creatorId, voters, votes, endTime, title }) => ({
+      _id,
       creatorId,
       voters,
       totalVotes: votes ? Object.values(votes).reduce((a, b) => a + b, 0) : 0,
