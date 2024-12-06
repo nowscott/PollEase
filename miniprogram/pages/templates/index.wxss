@@ -13,7 +13,7 @@
 
 .poll-header {
   margin: 0;
-  padding: 60rpx 48rpx 48rpx;
+  padding: 100rpx 48rpx 48rpx;
   width: 100%;
   box-sizing: border-box;
 }

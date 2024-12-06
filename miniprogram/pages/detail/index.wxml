@@ -4,7 +4,7 @@
     <view class="poll-header">
       <view class="poll-title">{{poll.title}}</view>
       <view class="description" wx:if="{{poll.description}}">{{poll.description}}</view>
-      <view class="poll-meta">
+      <view class="poll-meta" wx:if="{{poll && poll.createTimeStr && poll.endTimeStr}}">
         <text class="meta-item">创建时间：{{poll.createTimeStr}}</text>
         <text class="meta-item">截止时间：{{poll.endTimeStr}}</text>
       </view>
