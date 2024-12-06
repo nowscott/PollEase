@@ -13,7 +13,6 @@ Page({
   },
 
   onLoad() {
-    this.performFullSync();
     // 获取全局数据
     const app = getApp();
     this.setData({
@@ -24,47 +23,31 @@ Page({
     });
     // 获取用户信息
     this.getUserInfo().then(() => {
-      const pollStorage = this.selectComponent('#pollStorage');
-      if (pollStorage) {
-        const cacheData = pollStorage.loadFromCache();
-        this.processPollData(cacheData);
-      }
-      this.fetchPollList(true);
+      const cacheData = wx.getStorageSync('pollCache') || [];
+      this.processPollData(cacheData);
     });
   },
 
   onShow() {
-    if (this.data.needRefresh) {
-      this.setData({ needRefresh: false });
-      this.fetchPollList(true);
-    }
-  },
-
-  async performFullSync() {
-    const pollStorage = this.selectComponent('#pollStorage');
-    if (!pollStorage) {
-      console.error('pollStorage 组件未找到');
-      return;
-    }
-
-    try {
-      await pollStorage.sync(); // 全量同步服务器数据
-      const cache = pollStorage.getCache();
-
-      if (cache && cache.data) {
-        this.processPollData(cache.data);
-        wx.showToast({
-          title: '数据已更新',
-          icon: 'success',
-        });
+    this.getUserInfo().then(openid => {
+      if (openid) {
+        console.log('获取到的 openid:', openid); // 调试输出
+        const pollStorage = this.selectComponent('#pollStorage');
+        if (pollStorage) {
+          pollStorage.setData({ openid }); // 确保 openid 被传递到组件
+          pollStorage.sync().then(() => {
+            const cacheData = wx.getStorageSync('pollCache') || [];
+            this.processPollData(cacheData);
+          }).catch(err => {
+            console.error('同步失败:', err);
+          });
+        } else {
+          console.error('pollStorage 组件未找到');
+        }
+      } else {
+        console.error('无法获取 openid，无法进行同步');
       }
-    } catch (err) {
-      console.error('全量更新失败:', err);
-      wx.showToast({
-        title: '全量更新失败，请稍后重试',
-        icon: 'none',
-      });
-    }
+    });
   },
 
   // 获取用户信息
@@ -87,34 +70,6 @@ Page({
     } catch (err) {
       this.handleError('获取用户信息失败', err);
       return null;
-    }
-  },
-
-  // 获取投票列表
-  async fetchPollList(silent = false) {
-    if (!this.data.openid) return;
-    if (!silent) {
-      this.setData({ loading: true });
-    }
-    const pollStorage = this.selectComponent('#pollStorage');
-    if (!pollStorage) {
-      console.error('pollStorage 组件未找到');
-      this.setData({ loading: false });
-      return;
-    }
-    try {
-      await pollStorage.sync();
-      const cache = pollStorage.getCache();
-
-      console.log('增量同步后数据:', cache.data); // 调试输出
-      this.processPollData(cache.data);
-    } catch (err) {
-      console.error('获取列表失败:', err);
-      this.handleError('获取列表失败', err);
-    } finally {
-      if (!silent) {
-        this.setData({ loading: false });
-      }
     }
   },
 
@@ -167,28 +122,18 @@ Page({
   },
 
   // 处理投票数据的公共方法
-  processPollData(newData) {
-    const { openid, selected, pollList: existingData } = this.data;
-    // 合并新旧数据，按 ID 去重
-  const mergedData = [...newData, ...existingData].reduce((acc, poll) => {
-    if (!acc.some(item => item._id === poll._id)) {
-      acc.push(poll);
-    }
-    return acc;
-  }, []);
-
-    const pollList = (mergedData || []).filter(poll => {
+  processPollData(data) {
+    const { openid, selected } = this.data;
+    const pollList = data.filter(poll => {
       if (selected === 'initiated') {
         return poll.creatorId === openid;
       } else if (selected === 'joined') {
-        return poll.voters && poll.voters.includes(openid);
+        return poll.participants && poll.participants.includes(openid);
       }
       return false;
     }).map(poll => ({
       ...poll,
-      totalVotes: poll.votes
-        ? Object.values(poll.votes).reduce((a, b) => a + b, 0)
-        : 0,
+      totalVotes: poll.votes ? Object.values(poll.votes).reduce((a, b) => a + b, 0) : 0,
       endTimeStr: poll.endTime ? this.formatDate(poll.endTime) : '未设置截止时间',
       title: this.truncateText(poll.title),
     }));
@@ -203,19 +148,21 @@ Page({
   // 处理缓存更新事件
   onCacheUpdate(e) {
     const { data } = e.detail;
-    this.setData({ pollList: data });
+    wx.setStorageSync('pollCache', data);
+    this.processPollData(data);
   },
 
   // 切换到我发起的投票
   selectInitiated() {
     this.setData({ selected: 'initiated' });
-    this.fetchPollList(true);
+    const cacheData = wx.getStorageSync('pollCache') || [];
+    this.processPollData(cacheData);
   },
 
   // 切换到我参与的投票
   selectJoined() {
     this.setData({ selected: 'joined' });
-    this.fetchPollList(true);
+    const cacheData = wx.getStorageSync('pollCache') || [];
+    this.processPollData(cacheData);
   },
-
 });

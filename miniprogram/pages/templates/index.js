@@ -1,5 +1,5 @@
 import { pollTemplates } from '../../config/poll-templates';
-
+const app = getApp();
 Page({
   data: {
     templates: []
@@ -7,7 +7,6 @@ Page({
 
   onLoad() {
     // 获取全局数据
-    const app = getApp();
     this.setData({
       statusBarHeight: app.globalData.statusBarHeight,
       titleBarHeight: app.globalData.titleBarHeight,

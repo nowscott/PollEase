@@ -14,7 +14,6 @@ Page({
 
   onLoad(options) {
     // 获取全局数据
-    const app = getApp();
     this.setData({
       statusBarHeight: app.globalData.statusBarHeight,
       titleBarHeight: app.globalData.titleBarHeight,
@@ -218,14 +217,6 @@ Page({
       const now = Date.now()
       const isExpired = now > data.endTime
 
-      // 增加日志输出便于调试
-      console.log('投票详情:', {
-        openid: this.data.openid,
-        voters: data.voters,
-        voterType: data.voters ? data.voters.map(v => typeof v) : [],
-        voterValues: data.voters || []
-      })
-
       let hasVoted = false
       if (this.data.openid && data.voters && Array.isArray(data.voters)) {
         hasVoted = data.voters.some(voter => {
@@ -285,13 +276,6 @@ Page({
         isExpired,
         hasVoted: hasVoted,  // 使用更新后的 hasVoted 值
         loading: false
-      })
-
-      // 添加设置后的状态日志
-      console.log('页面状态:', {
-        hasVoted,
-        isExpired,
-        openid: this.data.openid
       })
 
       wx.hideLoading()
