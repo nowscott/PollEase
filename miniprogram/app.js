@@ -9,6 +9,21 @@ App({
         traceUser: true,
       })
     }
+
+    const systemInfo = wx.getSystemInfoSync();
+    const statusBarHeight = systemInfo.statusBarHeight;
+    const tabBarHeight = systemInfo.screenHeight - systemInfo.windowHeight - statusBarHeight;
+    const menuButton = wx.getMenuButtonBoundingClientRect();
+    const titleBarHeight = menuButton.bottom - menuButton.top + 2 * (menuButton.top - statusBarHeight);
+    const pageHeight = systemInfo.screenHeight + titleBarHeight;
+
+    // 将高度信息存储在全局数据中
+    this.globalData = {
+      statusBarHeight: statusBarHeight + 'px',
+      titleBarHeight: titleBarHeight + 'px',
+      tabBarHeight: tabBarHeight + 'px',
+      pageHeight: pageHeight + 'px'
+    };
   },
   globalData: {}
 })

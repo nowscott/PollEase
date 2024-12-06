@@ -3,7 +3,8 @@
     "pages/home/index",
     "pages/create/index",
     "pages/detail/index",
-    "pages/templates/index"
+    "pages/templates/index",
+    "pages/more/index"
   ],
   "window": {
     "backgroundColor": "@backgroundColor",
@@ -31,6 +32,12 @@
         "text": "",
         "iconPath": "images/tapbar/add.png",
         "selectedIconPath": "images/tapbar/add-active.png"
+      },
+      {
+        "pagePath": "pages/more/index",
+        "text": "",
+        "iconPath": "images/tapbar/more.png",
+        "selectedIconPath": "images/tapbar/more-active.png"
       }
     ],
     "color": "#000",

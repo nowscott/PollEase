@@ -1,0 +1,8 @@
+<view class="container">
+  <view class="title" style="margin-top: {{statusBarHeight}};height: {{titleBarHeight}};">
+    <text class="title-text" style="line-height: {{titleBarHeight}};">更多</text>
+  </view>
+  <view class="content">
+    <text>这里展示应用的基础信息和功能介绍。</text>
+  </view>
+</view>

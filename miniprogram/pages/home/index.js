@@ -13,28 +13,24 @@ Page({
   },
 
   onLoad() {
+    // 获取全局数据
+    const app = getApp();
+    this.setData({
+      statusBarHeight: app.globalData.statusBarHeight,
+      titleBarHeight: app.globalData.titleBarHeight,
+      tabBarHeight: app.globalData.tabBarHeight,
+      pageHeight: app.globalData.pageHeight
+    });
+
     // 获取用户信息
     this.getUserInfo().then(() => {
       // 从本地缓存加载数据
-      const pollStorage = this.selectComponent('#pollStorage')
+      const pollStorage = this.selectComponent('#pollStorage');
       if (pollStorage) {
-        const cacheData = pollStorage.loadFromCache()
-        this.processPollData(cacheData)
+        const cacheData = pollStorage.loadFromCache();
+        this.processPollData(cacheData);
       }
-      this.fetchPollList(true)
-    })
-    const systemInfo = wx.getSystemInfoSync();
-    const statusBarHeight = systemInfo.statusBarHeight;
-    const tabBarHeight = systemInfo.screenHeight - systemInfo.windowHeight - statusBarHeight;
-    const menuButton = wx.getMenuButtonBoundingClientRect();
-    const titleBarHeight = menuButton.bottom - menuButton.top + 2 * (menuButton.top - statusBarHeight);
-    const pageHeight = systemInfo.screenHeight + titleBarHeight;
-    // 传递数据
-    this.setData({
-      statusBarHeight: statusBarHeight + 'px',
-      titleBarHeight: titleBarHeight + 'px',
-      tabBarHeight: tabBarHeight + 'px',
-      pageHeight: pageHeight + 'px'
+      this.fetchPollList(true);
     });
   },
 

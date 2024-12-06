@@ -1,0 +1,28 @@
+/* 整体容器 */
+.container {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  background-color: var(--bgColor);
+}
+
+/* 标题区域 */
+.title {
+  width: 100%;
+  font-size: var(--font-xlarge);
+  color: var(--textColor);
+}
+
+.title-text {
+  display: inline-block;
+  padding: 0 var(--spacing-left);
+}
+
+/* 内容样式 */
+.content {
+  font-size: var(--font-normal);
+  color: var(--textColor);
+  padding: 20rpx;
+}
