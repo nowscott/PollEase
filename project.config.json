@@ -19,11 +19,16 @@
       "outputPath": ""
     },
     "useIsolateContext": true,
-    "packNpmManually": false,
-    "minifyWXSS": true
+    "packNpmManually": true,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "useCompilerPlugins": [
+      "typescript",
+      "less"
+    ]
   },
   "appid": "wxe14acc7c31980b8e",
-  "projectname": "poll-mini",
+  "projectname": "pollease",
   "libVersion": "3.0.0",
   "compileType": "miniprogram",
   "srcMiniprogramRoot": "miniprogram/",

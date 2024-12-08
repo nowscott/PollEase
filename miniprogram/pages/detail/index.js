@@ -44,7 +44,7 @@ Page({
     if (!wx.cloud) {
       wx.cloud.init({
         traceUser: true,
-        env: 'polldata-6gg0tgkmfc2bb2a8'
+        env: wx.cloud.DYNAMIC_CURRENT_ENV
       })
     }
 

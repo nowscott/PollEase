@@ -12,3 +12,40 @@ $RECYCLE.BIN/
 
 # Node.js
 node_modules/
+
+# 微信小程序
+# 开发工具本地配置
+project.config.json
+project.private.config.json
+
+# 微信开发者工具本地配置
+.ideaide
+.vscode
+
+# 小程序本地缓存
+miniprogram_npm/
+miniprogram/node_modules/
+
+# 打包和构建产物
+dist/
+build/
+
+# 敏感配置文件
+config/prod.js
+config/dev.js
+**/config.js
+
+# 本地测试文件
+**/test/
+**/__test__/
+
+# 日志文件
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 临时文件
+*.swp
+.temp/
+.tmp/

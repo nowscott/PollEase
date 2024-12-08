@@ -7,25 +7,32 @@
     "miniprogram": {
       "list": [
         {
-          "name": "首页-快速开始",
-          "pathName": "pages/index/index",
-          "query": ""
+          "name": "投票详情",
+          "pathName": "pages/detail/index",
+          "query": "pollId=test123",
+          "scene": null
         },
         {
-          "name": "商品列表",
-          "pathName": "pages/goods-list/index",
+          "name": "创建投票",
+          "pathName": "pages/add/index",
           "query": "",
           "scene": null
         },
         {
-          "name": "云开发示例",
-          "pathName": "pages/examples/index",
+          "name": "我的投票",
+          "pathName": "pages/home/index",
           "query": "",
           "scene": null
         },
         {
-          "name": "个人中心",
-          "pathName": "pages/user-center/index",
+          "name": "更多功能",
+          "pathName": "pages/more/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "投票模板",
+          "pathName": "pages/templates/index",
           "query": "",
           "scene": null
         }

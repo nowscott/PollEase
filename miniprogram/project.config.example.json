@@ -21,5 +21,12 @@
   },
   "cloudbaseRoot": "cloudbase/",
   "miniprogramRoot": "miniprogram/",
-  "cloud": true
+  "cloud": true,
+  "appid": "your_appid_here",
+  "projectname": "your_project_name",
+  "condition": {
+    "miniprogram": {
+      "list": []
+    }
+  }
 }
