@@ -16,7 +16,8 @@ Page({
       statusBarHeight: app.globalData.statusBarHeight,
       titleBarHeight: app.globalData.titleBarHeight,
       tabBarHeight: app.globalData.tabBarHeight,
-      pageHeight: app.globalData.pageHeight
+      pageHeight: app.globalData.pageHeight,
+      pageTopy: app.globalData.pageTopy
     });
     const { templateId } = options
     if (templateId) {

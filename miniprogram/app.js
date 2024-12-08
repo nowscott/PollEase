@@ -16,14 +16,16 @@ App({
     const menuButton = wx.getMenuButtonBoundingClientRect();
     const titleBarHeight = menuButton.bottom - menuButton.top + 2 * (menuButton.top - statusBarHeight);
     const pageHeight = systemInfo.screenHeight + titleBarHeight;
-
+    const pageTopy = statusBarHeight + titleBarHeight;
     // 将高度信息存储在全局数据中
     this.globalData = {
       statusBarHeight: statusBarHeight + 'px',
       titleBarHeight: titleBarHeight + 'px',
       tabBarHeight: tabBarHeight + 'px',
-      pageHeight: pageHeight + 'px'
+      pageHeight: pageHeight + 'px',
+      pageTopy: pageTopy + 'px'
     };
+
   },
   globalData: {}
 })

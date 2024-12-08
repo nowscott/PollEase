@@ -18,7 +18,8 @@ Page({
       statusBarHeight: app.globalData.statusBarHeight,
       titleBarHeight: app.globalData.titleBarHeight,
       tabBarHeight: app.globalData.tabBarHeight,
-      pageHeight: app.globalData.pageHeight
+      pageHeight: app.globalData.pageHeight,
+      pageTopy: app.globalData.pageTopy
     });
     const { pollId } = options
     if (!pollId) {
@@ -360,7 +361,7 @@ Page({
     const pages = getCurrentPages();
     if (pages.length > 1) {
       wx.navigateBack({
-        delta: 1 
+        delta: 1
       });
     } else {
       wx.reLaunch({

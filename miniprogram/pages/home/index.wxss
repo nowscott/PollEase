@@ -13,11 +13,23 @@
   width: 100%;
   margin: 0;
   flex-shrink: 0;
+  background: var(--bgColor);
+  box-shadow: var(--boxShadow);
+}
+
+.title-content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 24rpx;
+  position: relative;
 }
 
 .title-text {
-  display: inline-block;
-  padding: 0 var(--spacing-left);
+  position: absolute;
+  left: 24rpx;
+  font-size: var(--font-xlarge);
+  font-weight: 600;
 }
 
 /* 按钮容器样式 */
@@ -27,26 +39,24 @@
   align-items: center;
   background-color: var(--btnColor);
   border-radius: 16rpx;
-  border: 2rpx dashed var(--borderColor);
   overflow: hidden;
   box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
-  margin: 20rpx auto;
-  flex-shrink: 0;
-  width: fit-content;
+  height: 80%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-/* 按钮基础样式 */
 .toggle-button {
   flex: 1;
   text-align: center;
-  padding: 12rpx 16rpx;
+  padding: 8rpx 20rpx;
   font-size: var(--font-normal);
   color: #fff;
   font-weight: bold;
   transition: all 0.3s ease;
 }
 
-/* 被选中的按钮样式 */
 .toggle-button.selected {
   background-color: var(--btnSelected);
   color: #fff;
@@ -77,7 +87,7 @@
   box-sizing: border-box;
   background: var(--listBackgroundColor);
   padding: var(--spacing-left) 0;
-  border-bottom: 3rpx dashed var(--dividerColor);
+  border-bottom: 5rpx dashed var(--dividerColor);
 }
 
 /* 投票标题 */

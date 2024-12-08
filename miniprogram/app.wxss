@@ -1,6 +1,9 @@
 /**app.wxss**/
 page {
   /* 扩展的颜色变量 */
+  --tabBarBgColor: #fff;
+  --tabBarBorderColor: #dcdcdc;
+  --boxShadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
   --bgColor: #f7f6f3;
   --dividerColor: #d6d3cb;
   --textColor: #000;
@@ -20,6 +23,9 @@ page {
 /* 在深色模式下定义颜色变量 */
 @media (prefers-color-scheme: dark) {
   page {
+    --tabBarBgColor: #000;
+    --tabBarBorderColor: #232323;
+    --boxShadow: 0 2rpx 10rpx rgba(255, 255, 255, 0.1);
     --bgColor: #3a3937;
     --dividerColor: #6b685f;
     --textColor: #6a6965;

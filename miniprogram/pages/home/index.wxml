@@ -3,16 +3,17 @@
 <!-- 页面容器 -->
 <view class="container">
   <!-- 标题区域 -->
-  <view class="title" style="margin-top: {{statusBarHeight}};height: {{titleBarHeight}};">
-    <text class="title-text" style="line-height: {{titleBarHeight}};">主页</text>
-  </view>
-  <!-- 切换区域 -->
-  <view class="toggle-container">
-    <view class="toggle-button {{selected === 'initiated' ? 'selected' : ''}}" bindtap="selectInitiated">
-      我发起的
-    </view>
-    <view class="toggle-button {{selected === 'joined' ? 'selected' : ''}}" bindtap="selectJoined">
-      我参与的
+  <view class="title" style="padding-top: {{statusBarHeight}};height: {{titleBarHeight}};">
+    <view class="title-content">
+      <text class="title-text">主页</text>
+      <view class="toggle-container">
+        <view class="toggle-button {{selected === 'initiated' ? 'selected' : ''}}" bindtap="selectInitiated">
+          我发起的
+        </view>
+        <view class="toggle-button {{selected === 'joined' ? 'selected' : ''}}" bindtap="selectJoined">
+          我参与的
+        </view>
+      </view>
     </view>
   </view>
   <!-- 列表区域 -->

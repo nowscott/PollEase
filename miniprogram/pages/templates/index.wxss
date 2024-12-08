@@ -12,6 +12,7 @@
 .title {
   width: 100%;
   margin: 0;
+  box-shadow: var(--boxShadow);
 }
 
 .title-text {
@@ -33,7 +34,7 @@
   height: 100%;
   box-sizing: border-box;
   display: flex;
-  border: 1px dashed var(--borderColor);
+  border: 4rpx dashed var(--borderColor);
   position: relative;
   overflow: hidden;
   transition: all 0.2s ease

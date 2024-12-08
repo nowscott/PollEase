@@ -1,28 +1,28 @@
 <view class="container">
-  <view class="title" style="margin-top: {{statusBarHeight}};height: {{titleBarHeight}};">
+  <view class="title" style="padding-top: {{statusBarHeight}};height: {{titleBarHeight}};">
     <image src="/images/icons/return_default.svg" bindtap="onBackButtonTap" class="return-btn"></image>
+    <text class="title-text" style="line-height: {{titleBarHeight}};">{{poll.title}}</text>
   </view>
-  <view class="poll-header">
-    <view class="poll-title">{{poll.title}}</view>
-    <view class="description" wx:if="{{poll.description}}">{{poll.description}}</view>
-    <view class="poll-meta" wx:if="{{poll && poll.createTimeStr && poll.endTimeStr}}">
-      <text class="meta-item">创建时间：{{poll.createTimeStr}}</text>
-      <text class="meta-item">截止时间：{{poll.endTimeStr}}</text>
+  <scroll-view scroll-y class="poll-content" style="margin-top: {{pageTopy}};">
+    <view class="poll-header">
+      <view class="description" wx:if="{{poll.description}}">{{poll.description}}</view>
+      <view class="poll-meta" wx:if="{{poll && poll.createTimeStr && poll.endTimeStr}}">
+        <text class="meta-item">创建时间：{{poll.createTimeStr}}</text>
+        <text class="meta-item">截止时间：{{poll.endTimeStr}}</text>
+      </view>
     </view>
-  </view>
-  <block wx:if="{{loading}}">
-    <view class="loading">
-      <text>加载中...</text>
-    </view>
-  </block>
-  <block wx:elif="{{error}}">
-    <view class="error">
-      <text>{{error}}</text>
-      <button bindtap="fetchPollDetail" class="retry-btn">重新加载</button>
-    </view>
-  </block>
-  <block wx:elif="{{poll}}">
-    <view class="poll-content">
+    <block wx:if="{{loading}}">
+      <view class="loading">
+        <text>加载中...</text>
+      </view>
+    </block>
+    <block wx:elif="{{error}}">
+      <view class="error">
+        <text>{{error}}</text>
+        <button bindtap="fetchPollDetail" class="retry-btn">重新加载</button>
+      </view>
+    </block>
+    <block wx:elif="{{poll}}">
       <view class="poll-status">
         <text wx:if="{{isExpired}}" class="expired-tag">投票已结束</text>
         <text wx:elif="{{hasVoted}}" class="voted-tag">已完成投票</text>
@@ -42,20 +42,13 @@
           </view>
         </block>
       </view>
-    </view>
-    <view class="poll-info">
-      <view class="voter-count">已有 {{poll.voterCount || 0}} 人参与投票</view>
-    </view>
-    <view class="share-section">
-      <button class="share-btn" open-type="share">邀请好友投票</button>
-    </view>
-  </block>
-  <block wx:if="{{needAuth}}">
-    <view class="auth-container">
-      <button class="auth-btn" bindtap="reauthorize">授权参与投票</button>
-    </view>
-  </block>
-  <block wx:else>
-    <!-- 原有的投票内容 -->
-  </block>
+      <view class="poll-info">
+        <view class="voter-count">已有 {{poll.voterCount || 0}} 人参与投票</view>
+      </view>
+    </block>
+  </scroll-view>
+  <!-- 底部tabbar -->
+  <view class="toggle-container">
+    <button class="toggle-button" open-type="share">邀请好友投票</button>
+  </view>
 </view>

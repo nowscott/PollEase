@@ -1,11 +1,9 @@
 <view class="container">
-  <view class="title" style="margin-top: {{statusBarHeight}};height: {{titleBarHeight}};">
+  <view class="title" style="padding-top: {{statusBarHeight}};height: {{titleBarHeight}};">
     <image src="/images/icons/return_default.svg" bindtap="onBackButtonTap" class="return-btn"></image>
+    <text class="title-text" style="line-height: {{titleBarHeight}};">创建投票</text>
   </view>
-  <view class="poll-header">
-    <view class="poll-title">创建投票</view>
-  </view>
-  <view class="poll-content">
+  <scroll-view scroll-y class="poll-content" style="margin-top: {{pageTopy}}">
     <view class="form-group">
       <view class="form-label">投票标题</view>
       <view class="input-box">
@@ -31,9 +29,10 @@
         </block>
       </view>
     </view>
-  </view>
-  <view class="btn-container">
-    <button class="submit-btn {{!canSubmit ? 'disabled' : ''}}" bindtap="createPoll" disabled="{{!canSubmit}}">
+  </scroll-view>
+  <!-- 底部tabbar -->
+  <view class="toggle-container">
+    <button class="toggle-button {{!canSubmit ? 'disabled' : ''}}" bindtap="createPoll" disabled="{{!canSubmit}}">
       发起投票
     </button>
   </view>

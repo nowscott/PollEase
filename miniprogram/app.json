@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/templates/index",
     "pages/home/index",
     "pages/add/index",
     "pages/detail/index",
-    "pages/templates/index",
     "pages/more/index"
   ],
   "window": {
@@ -22,22 +22,22 @@
   "tabBar": {
     "list": [
       {
-        "pagePath": "pages/home/index",
-        "text": "",
-        "iconPath": "images/tapbar/home.png",
-        "selectedIconPath": "images/tapbar/home-active.png"
-      },
-      {
         "pagePath": "pages/templates/index",
         "text": "",
-        "iconPath": "images/tapbar/add.png",
-        "selectedIconPath": "images/tapbar/add-active.png"
+        "iconPath": "images/tabbar/add.png",
+        "selectedIconPath": "images/tabbar/add-active.png"
+      },
+      {
+        "pagePath": "pages/home/index",
+        "text": "",
+        "iconPath": "images/tabbar/home.png",
+        "selectedIconPath": "images/tabbar/home-active.png"
       },
       {
         "pagePath": "pages/more/index",
         "text": "",
-        "iconPath": "images/tapbar/more.png",
-        "selectedIconPath": "images/tapbar/more-active.png"
+        "iconPath": "images/tabbar/more.png",
+        "selectedIconPath": "images/tabbar/more-active.png"
       }
     ],
     "color": "#000",

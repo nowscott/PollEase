@@ -1,6 +1,6 @@
 <view class="page-wrapper">
   <view class="container">
-    <view class="title" style="margin-top: {{statusBarHeight}};height: {{titleBarHeight}};">
+    <view class="title" style="padding-top: {{statusBarHeight}};height: {{titleBarHeight}};">
       <text class="title-text" style="line-height: {{titleBarHeight}};">从模版新建</text>
     </view>
     <view class="template-list">

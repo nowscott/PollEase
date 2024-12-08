@@ -6,20 +6,37 @@
   height: 100vh;
   flex-direction: column;
   background-color: var(--bgColor);
+  position: relative;
 }
 
 /* 标题区域 */
 .title {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   margin: 0;
+  display: flex;
+  align-items: center;
+  background-color: var(--bgColor);
+  z-index: 100;
+  box-shadow: var(--boxShadow);
+}
+
+/* 标题文本 */
+.title-text {
+  display: inline-block;
+  padding: 0 var(--spacing-left);
+  background-color: var(--backgroundColor);
 }
 
 /* 返回按钮样式 */
 .return-btn {
   width: 48rpx;
   height: 48rpx;
-  display: inline-block;
-  padding: 0 var(--spacing-left);
+  margin-left: var(--spacing-left);
+  background-color: var(--backgroundColor);
 }
 
 /* 标题区域样式 */
@@ -45,12 +62,22 @@
   gap: 8rpx;
 }
 
+/* 内容包装器 */
+.content-wrapper {
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
 /* 投票内容区域 */
 .poll-content {
-  margin: 0;
+  flex: 1;
   width: 100%;
+  box-sizing: border-box;
+  background-color: var(--backgroundColor);
+  overflow-y: auto;
   padding: 24rpx 0;
-  flex: none;
 }
 
 /* 投票状态标签 */
@@ -61,7 +88,9 @@
   justify-content: flex-start;
 }
 
-.expired-tag, .voted-tag, .not-voted-tag {
+.expired-tag,
+.voted-tag,
+.not-voted-tag {
   display: inline-flex;
   align-items: center;
   padding: 4rpx 12rpx;
@@ -70,10 +99,13 @@
   font-size: var(--font-small);
   color: var(--subTextColor);
 }
-.not-voted-tag{
+
+.not-voted-tag {
   background: var(--btnColor);
 }
-.expired-tag,.voted-tag{
+
+.expired-tag,
+.voted-tag {
   background: var(--btnSelected);
 }
 
@@ -87,7 +119,7 @@
 
 .option {
   padding: 24rpx;
-  border: 2rpx dashed var(--borderColor);
+  border: 4rpx dashed var(--borderColor);
   border-radius: 20rpx;
   position: relative;
   overflow: hidden;
@@ -141,7 +173,8 @@
 }
 
 /* 加载和错误状态 */
-.loading, .error {
+.loading,
+.error {
   text-align: center;
   padding: 60rpx 40rpx;
   color: var(--subTextColor);
@@ -160,33 +193,6 @@
   font-size: var(--font-normal);
   padding: 12rpx 24rpx;
   border-radius: 8rpx;
-}
-
-/* 分享按钮 */
-.share-section {
-  padding: 24rpx 32rpx 48rpx;
-  background: var(--backgroundColor);
-  display: flex;
-  justify-content: center;
-}
-
-.share-btn {
-  min-width: 160rpx;
-  width: fit-content;
-  height: 88rpx;
-  background: var(--btnSelected);
-  color: #fff;
-  font-size: var(--font-medium);
-  font-weight: 500;
-  border-radius: 20rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2rpx dashed var(--borderColor);
-  padding: 0 48rpx;
-  margin: 0;
-  transition: all 0.2s ease;
-  white-space: nowrap;
 }
 
 .description {
@@ -225,6 +231,33 @@
   font-weight: 500;
   border: none;
 }
+
 .auth-btn::after {
   border: none;
+}
+
+/* 底部tabbar */
+.toggle-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: var(--tabBarBgColor);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 12rpx);
+  border-top: 1px solid var(--tabBarBorderColor);
+}
+
+/* 按钮基础样式 */
+.toggle-button {
+  width: 100%;
+  text-align: center;
+  font-size: var(--font-normal);
+  color: #fff;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  background-color: var(--btnSelected);
+  border: 3rpx dashed var(--borderColor);
+  border-radius: 16rpx;
+  line-height: 2;
 }
