@@ -150,11 +150,6 @@ Page({
         }
       }
 
-      console.log('调用投票云函数，参数:', {
-        pollId: this.data.pollId,
-        optionIndex: optionIndex
-      }) // 添加日志
-
       const { result } = await wx.cloud.callFunction({
         name: 'submitVote',
         data: {
@@ -446,12 +441,16 @@ Page({
     if (poll.description) {
       resultText += `描述：${poll.description}\n`
     }
+
+    // 计算总票数
+    const totalVotes = poll.sortedOptions.reduce((sum, option) => sum + (option.votes || 0), 0)
     
-    resultText += `\n总投票人数：${poll.voterCount || 0}人\n\n投票选项：\n`
+    resultText += `\n总投票人数：${totalVotes}人\n\n投票选项：\n`
     
     poll.sortedOptions.forEach((option, index) => {
-      const percentage = this.calculateVotePercentage(option)
-      resultText += `${index + 1}. ${option.text}：${option.votes}票 (${percentage})\n`
+      const votes = option.votes || 0
+      const percentage = totalVotes === 0 ? 0 : Math.round((votes / totalVotes) * 100)
+      resultText += `${index + 1}. ${option.text}：${votes}票 (${percentage}%)\n`
     })
 
     wx.setClipboardData({

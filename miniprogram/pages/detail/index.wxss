@@ -246,15 +246,15 @@
 
 /* 底部tabbar样式 */
 .toggle-container {
-display: flex;
+  display: flex;
   width: 100%;
-  background-color: #ffffff;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding-bottom: env(safe-area-inset-bottom);
-  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
+  background-color: var(--tabBarBgColor);
+  box-shadow: var(--boxShadow);
   z-index: 100;
 }
 
