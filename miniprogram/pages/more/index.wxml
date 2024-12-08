@@ -1,8 +1,59 @@
 <view class="container">
-  <view class="title" style="padding-top: {{statusBarHeight}};height: {{titleBarHeight}};">
-    <text class="title-text" style="line-height: {{titleBarHeight}};">更多</text>
-  </view>
+    <view class="title" style="padding-top: {{statusBarHeight}};height: {{titleBarHeight}};">
+      <text class="title-text" style="line-height: {{titleBarHeight}};">更多</text>
+    </view>
+
   <view class="content">
-    <text>这里展示应用的基础信息和功能介绍。</text>
+    <!-- 统计框 -->
+    <view class="stats-box">
+      <view class="stat-item">
+        <text class="stat-number">{{voteCount}}</text>
+        <text class="stat-label">投票创建数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{participantCount}}</text>
+        <text class="stat-label">参与人次</text>
+      </view>
+    </view>
+
+    <!-- 程序介绍 -->
+    <view class="section">
+      <view class="section-title">程序介绍</view>
+      <view class="section-content">
+        <text>这是一个便捷的投票小程序，帮助您轻松创建和管理投票。无需复杂设置，只需几步即可创建专业的投票，让投票变得简单有趣。</text>
+      </view>
+    </view>
+
+    <!-- 使用教程 -->
+    <view class="section">
+      <view class="section-title">使用教程</view>
+      <view class="section-content">
+        <text decode="true">1. 点击首页"创建投票"按钮\n2. 填写投票标题和描述\n3. 添加投票选项\n4. 设置投票规则（如截止时间）\n5. 点击创建完成\n6. 分享给好友参与投票</text>
+      </view>
+    </view>
+
+    <!-- 联系方式 -->
+    <view class="section">
+      <view class="section-title">联系方式</view>
+      <view class="contact-list">
+        <view class="contact-item" bindtap="copyGithub">
+          <image class="contact-icon" src="/images/more/github.jpg" mode="aspectFit"></image>
+          <text>Github</text>
+        </view>
+        <view class="contact-item" bindtap="copyXiaohongshu">
+          <image class="contact-icon" src="/images/more/xhs.jpg" mode="aspectFit"></image>
+          <text>小红书</text>
+        </view>
+        <view class="contact-item" bindtap="copyEmail">
+          <image class="contact-icon" src="/images/more/qqmail.jpg" mode="aspectFit"></image>
+          <text>问题反馈</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 备案信息 -->
+    <view class="footer">
+      <text class="icp">Copyright 2024 投票小程序\n备案号：xxx-xxx-xxx</text>
+    </view>
   </view>
 </view>

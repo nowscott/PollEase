@@ -14,8 +14,6 @@ Page({
   },
 
   onLoad() {
-    // 获取全局数据
-    const app = getApp();
     this.setData({
       statusBarHeight: app.globalData.statusBarHeight,
       titleBarHeight: app.globalData.titleBarHeight,

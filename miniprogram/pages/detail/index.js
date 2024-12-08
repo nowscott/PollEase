@@ -169,6 +169,12 @@ Page({
         votedPolls[this.data.pollId] = true
         wx.setStorageSync('votedPolls', votedPolls)
 
+        // 更新统计数据
+        await wx.cloud.callFunction({
+          name: 'updateStatistics',
+          data: { type: 'participant' }
+        });
+
         this.setData({
           hasVoted: true
         })
@@ -466,36 +472,71 @@ Page({
   },
 
   // 删除投票
-  deletePoll() {
-    wx.showModal({
-      title: '确认删除',
-      content: '确定要删除这个投票吗？此操作不可恢复。',
-      success: async (res) => {
-        if (res.confirm) {
-          try {
-            await wx.cloud.callFunction({
-              name: 'deletePoll',
-              data: {
-                pollId: this.data.pollId
+  async deletePoll() {
+    try {
+      // 先获取用户的 openid
+      if (!this.data.openid) {
+        await this.getUserInfo()
+      }
+
+      // 获取投票详情
+      const db = wx.cloud.database()
+      const poll = await db.collection('polls').doc(this.data.pollId).get()
+      
+      // 检查是否是本人创建的投票
+      if (poll.data._openid !== this.data.openid) {
+        wx.showToast({
+          title: '不是你创建的投票',
+          icon: 'error'
+        })
+        return
+      }
+      
+      wx.showModal({
+        title: '确认删除',
+        content: '确定要删除这个投票吗？此操作不可恢复。',
+        success: async (res) => {
+          if (res.confirm) {
+            try {
+              const result = await wx.cloud.callFunction({
+                name: 'deletePoll',
+                data: {
+                  pollId: this.data.pollId
+                }
+              })
+              
+              if (result.result && result.result.success) {
+                wx.showToast({
+                  title: '删除成功',
+                  icon: 'success',
+                  success: () => {
+                    setTimeout(() => {
+                      wx.navigateBack()
+                    }, 1500)
+                  }
+                })
+              } else {
+                wx.showToast({
+                  title: result.result.error || '删除失败',
+                  icon: 'error'
+                })
               }
-            })
-            wx.showToast({
-              title: '删除成功',
-              icon: 'success',
-              success: () => {
-                setTimeout(() => {
-                  wx.navigateBack()
-                }, 1500)
-              }
-            })
-          } catch (error) {
-            wx.showToast({
-              title: '删除失败',
-              icon: 'error'
-            })
+            } catch (error) {
+              console.error('删除出错:', error)
+              wx.showToast({
+                title: '删除失败',
+                icon: 'error'
+              })
+            }
           }
         }
-      }
-    })
+      })
+    } catch (error) {
+      console.error('获取投票详情失败:', error)
+      wx.showToast({
+        title: '操作失败',
+        icon: 'error'
+      })
+    }
   },
 })

@@ -185,6 +185,12 @@ Page({
         data: pollData
       })
 
+      // 更新统计数据
+      await wx.cloud.callFunction({
+        name: 'updateStatistics',
+        data: { type: 'vote' }
+      })
+
       wx.hideLoading()
 
       if (result._id) {
