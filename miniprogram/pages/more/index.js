@@ -9,17 +9,19 @@ Page({
     voteCount: '0',
     participantCount: '0',
     githubLink: 'https://github.com/nowscott',
-    xiaohongshuLink: 'https://xiaohongshu.com/user/profile',
+    xiaohongshuLink: 'https://www.xiaohongshu.com/user/profile/5d40f52f000000001101ba6c?xhsshare=CopyLink&appuid=5d40f52f000000001101ba6c&apptime=1733669337&share_id=7c99ca72ee424efe896177e160a51ff6',
     email: 'nowscott@qq.com'
   },
 
-  onLoad: function() {
+  onLoad: function () {
     // 设置页面高度等信息
     this.setData({
+      SDKVersion: app.globalData.SDKVersion,
       statusBarHeight: app.globalData.statusBarHeight,
       titleBarHeight: app.globalData.titleBarHeight,
       tabBarHeight: app.globalData.tabBarHeight,
-      pageHeight: app.globalData.pageHeight
+      pageHeight: app.globalData.pageHeight,
+      pageTopy: app.globalData.pageTopy
     });
 
     // 获取统计数据
@@ -27,7 +29,7 @@ Page({
   },
 
   // 获取统计数据
-  getStatistics: async function() {
+  getStatistics: async function () {
     try {
       // 调用云函数获取或初始化统计数据
       const result = await wx.cloud.callFunction({
@@ -55,12 +57,12 @@ Page({
   },
 
   // 复制 Github 链接
-  copyGithub: function() {
+  copyGithub: function () {
     wx.setClipboardData({
       data: this.data.githubLink,
-      success: function() {
+      success: function () {
         wx.showToast({
-          title: 'Github链接已复制',
+          title: '链接已复制',
           icon: 'success'
         });
       }
@@ -68,12 +70,12 @@ Page({
   },
 
   // 复制小红书链接
-  copyXiaohongshu: function() {
+  copyXiaohongshu: function () {
     wx.setClipboardData({
       data: this.data.xiaohongshuLink,
-      success: function() {
+      success: function () {
         wx.showToast({
-          title: '小红书链接已复制',
+          title: '链接已复制',
           icon: 'success'
         });
       }
@@ -81,10 +83,10 @@ Page({
   },
 
   // 复制邮箱
-  copyEmail: function() {
+  copyEmail: function () {
     wx.setClipboardData({
       data: this.data.email,
-      success: function() {
+      success: function () {
         wx.showToast({
           title: '邮箱已复制',
           icon: 'success'

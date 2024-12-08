@@ -79,7 +79,6 @@
   display: inline-flex;
   align-items: center;
   padding: 4rpx 12rpx;
-  border: 2rpx dashed var(--borderColor);
   border-radius: 8rpx;
   font-size: var(--font-small);
   color: var(--subTextColor);
@@ -205,7 +204,7 @@
 
 .description {
   font-size: 28rpx;
-  color: #666;
+  color: var(--subTextColor);
   margin: 20rpx 0;
   padding: 0;
   line-height: 1.5;
@@ -217,7 +216,7 @@
 
 .voter-count {
   font-size: 28rpx;
-  color: #666;
+  color: var(--subTextColor);
   margin-top: 10rpx;
 }
 
@@ -232,8 +231,8 @@
   width: 80%;
   height: 88rpx;
   line-height: 88rpx;
-  background: #07c160;
-  color: #fff;
+  background: var(--color-success);
+  color: var(--inputBgColor);
   border-radius: 44rpx;
   font-size: 32rpx;
   font-weight: 500;
@@ -291,7 +290,7 @@
   top: 20%;
   height: 60%;
   width: 1rpx;
-  background-color: #eee;
+  background-color: var(--dividerColor);
 }
 
 /* 按钮基础样式 */
@@ -352,7 +351,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: #fff;
+  background: var(--tabBarBgColor);
   border-radius: 24rpx 24rpx 0 0;
   padding: 32rpx;
 }
@@ -360,13 +359,13 @@
 .vote-modal-header {
   text-align: center;
   padding-bottom: 32rpx;
-  border-bottom: 1rpx solid #eee;
+  border-bottom: 1rpx solid var(--dividerColor);
 }
 
 .vote-modal-title {
   font-size: 32rpx;
   font-weight: 500;
-  color: #333;
+  color: var(--textColor);
 }
 
 .vote-modal-options {
@@ -378,46 +377,49 @@
 .vote-modal-option {
   padding: 24rpx;
   margin: 16rpx 0;
-  background: #f5f5f5;
+  background: var(--bgColor);
   border-radius: 12rpx;
   transition: all 0.3s;
 }
 
 .vote-modal-option.selected {
-  background: #e6f7ff;
-  border: 2rpx solid #1890ff;
+  background: var(--btnSelected);
+  border: 2rpx solid var(--borderColor);
 }
 
 .vote-modal-footer {
   display: flex;
   justify-content: space-between;
-  padding-top: 24rpx;
-  border-top: 1rpx solid #eee;
+  padding: 24rpx 32rpx;
+  border-top: 1rpx solid var(--dividerColor);
+  gap: 24rpx;
 }
 
-.vote-modal-cancel,
-.vote-modal-confirm {
+.vote-modal-cancel {
   flex: 1;
-  margin: 0 12rpx;
   height: 88rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 20rpx;
   font-size: 32rpx;
-}
-
-.vote-modal-cancel {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--bgColor);
+  color: var(--subTextColor);
 }
 
 .vote-modal-confirm {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20rpx;
+  font-size: 32rpx;
   background: var(--btnSelected);
   color: #fff;
 }
 
 .vote-modal-confirm[disabled] {
-  background: #ccc;
-  color: #fff;
+  background: var(--color-disabled-text);
+  color: var(--inputBgColor);
 }

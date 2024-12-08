@@ -11,6 +11,7 @@ App({
     }
 
     const systemInfo = wx.getSystemInfoSync();
+    const SDKVersion = systemInfo.SDKVersion
     const statusBarHeight = systemInfo.statusBarHeight;
     const tabBarHeight = systemInfo.screenHeight - systemInfo.windowHeight - statusBarHeight;
     const menuButton = wx.getMenuButtonBoundingClientRect();
@@ -19,6 +20,7 @@ App({
     const pageTopy = statusBarHeight + titleBarHeight;
     // 将高度信息存储在全局数据中
     this.globalData = {
+      SDKVersion,
       statusBarHeight: statusBarHeight + 'px',
       titleBarHeight: titleBarHeight + 'px',
       tabBarHeight: tabBarHeight + 'px',

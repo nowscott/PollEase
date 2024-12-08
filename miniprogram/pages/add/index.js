@@ -142,33 +142,28 @@ Page({
   },
 
   async createPoll() {
-    if (!this.data.canSubmit) return
-    if (!this.data.openid) {
-      wx.showToast({
-        title: '请稍后重试',
-        icon: 'none'
-      })
-      return
+    if (!this.data.canSubmit) {
+      return;
     }
-
-    const title = this.data.title.trim()
-    const description = this.data.description.trim()
-    const options = this.data.options.filter(opt => opt.trim().length > 0)
-
-    if (options.length < 2) {
-      wx.showToast({
-        title: '至少需要2个选项',
-        icon: 'none'
-      })
-      return
-    }
-
-    wx.showLoading({
-      title: '创建中...',
-      mask: true
-    })
 
     try {
+      const title = this.data.title.trim()
+      const description = this.data.description.trim()
+      const options = this.data.options.filter(opt => opt.trim().length > 0)
+
+      if (options.length < 2) {
+        wx.showToast({
+          title: '至少需要2个选项',
+          icon: 'none'
+        })
+        return
+      }
+
+      wx.showLoading({
+        title: '创建中...',
+        mask: true
+      })
+
       const db = wx.cloud.database()
       const pollData = {
         title,
@@ -253,5 +248,5 @@ Page({
     wx.navigateBack({
       delta: 1 // Go back one page
     });
-  }
+  },
 })

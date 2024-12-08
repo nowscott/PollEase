@@ -194,10 +194,6 @@ Page({
 
   // 修改 fetchPollDetail 方法
   async fetchPollDetail() {
-    wx.showLoading({
-      title: '加载中...'
-    })
-
     try {
       // 先尝试获取 openid（如果还没有的话）
       if (!this.data.openid) {
@@ -493,7 +489,7 @@ Page({
       
       wx.showModal({
         title: '确认删除',
-        content: '确定要删除这个投票吗？此操作不可恢复。',
+        content: '确定要删除吗？此操作不可恢复。',
         success: async (res) => {
           if (res.confirm) {
             try {

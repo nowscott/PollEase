@@ -5,7 +5,7 @@
   display: flex;
   height: 100vh;
   flex-direction: column;
-  background-color: #f5f5f5;
+  background-color: var(--bgColor);
   min-height: 100vh;
 }
 
@@ -14,6 +14,11 @@
   width: 100%;
   margin: 0;
   box-shadow: var(--boxShadow);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: var(--bgColor);
 }
 
 .title-text {
@@ -24,14 +29,16 @@
 /* 内容样式 */
 .content {
   font-size: var(--font-normal);
-  color: var(--textColor);
+  color: var(--subTextColor);
   padding: 20rpx;
-  margin-top: 12rpx ;
+  margin-top: 12rpx;
+  overflow-y: auto;
+  flex: 1;
 }
 
 /* 统计盒子 */
 .stats-box {
-  background: #ffffff;
+  background: var(--tabBarBgColor);
   border-radius: 12rpx;
   padding: 30rpx;
   display: flex;
@@ -48,18 +55,18 @@
   display: block;
   font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: var(--textColor);
   margin-bottom: 8rpx;
 }
 
 .stat-label {
   font-size: 12px;
-  color: #666;
+  color: var(--subTextColor);
 }
 
 /* 部分 */
 .section {
-  background: #ffffff;
+  background: var(--tabBarBgColor);
   border-radius: 12rpx;
   padding: 30rpx;
   margin-bottom: 20rpx;
@@ -69,12 +76,12 @@
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 20rpx;
-  color: #333;
+  color: var(--textColor);
 }
 
 .section-content {
   font-size: 14px;
-  color: #666;
+  color: var(--subTextColor);
   line-height: 1.6;
 }
 
@@ -94,17 +101,15 @@
 .contact-icon {
   width: 48rpx;
   height: 48rpx;
-  margin-bottom: 10rpx;
   border-radius: 10rpx;
 }
 
 /* 页脚 */
 .footer {
   text-align: center;
-  padding: 40rpx 0;
 }
 
 .icp {
   font-size: 12px;
-  color: #999;
+  color: var(--subTextColor);
 }

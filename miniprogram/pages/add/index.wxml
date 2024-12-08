@@ -33,7 +33,7 @@
   <!-- 底部tabbar -->
   <view class="toggle-container">
     <view class="tab-item" bindtap="createPoll">
-      <image src="/images/add/submit.svg" class="tab-icon"></image>
+      <image src="/images/add/{{canSubmit ? 'submit-active' : 'submit'}}.svg" class="tab-icon"></image>
       <text class="tab-text">发起投票</text>
     </view>
   </view>
