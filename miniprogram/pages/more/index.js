@@ -2,10 +2,6 @@ const app = getApp();
 
 Page({
   data: {
-    statusBarHeight: 0,
-    titleBarHeight: '',
-    tabBarHeight: '',
-    pageHeight: '',
     voteCount: '0',
     participantCount: '0',
     githubLink: 'https://github.com/nowscott',
@@ -16,7 +12,7 @@ Page({
   onLoad: function () {
     // 设置页面高度等信息
     this.setData({
-      SDKVersion: app.globalData.SDKVersion,
+      version: app.globalData.version,
       statusBarHeight: app.globalData.statusBarHeight,
       titleBarHeight: app.globalData.titleBarHeight,
       tabBarHeight: app.globalData.tabBarHeight,

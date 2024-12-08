@@ -101,7 +101,7 @@
 .contact-icon {
   width: 48rpx;
   height: 48rpx;
-  border-radius: 10rpx;
+  border-radius: 12rpx;
 }
 
 /* 页脚 */

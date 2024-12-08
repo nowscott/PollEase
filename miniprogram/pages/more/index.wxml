@@ -53,7 +53,7 @@
 
     <!-- 备案信息 -->
     <view class="footer">
-      <text class="icp">当前版本：{{SDKVersion}}\n © 2024 投一下 | NowScott\n备案号：xxx-xxx-xxx</text>
+      <text class="icp">当前版本：{{version}}\n © 2024 投一下 | NowScott\n备案号：xxx-xxx-xxx</text>
     </view>
   </view>
 </view>
