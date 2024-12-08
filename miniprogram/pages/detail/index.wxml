@@ -6,9 +6,16 @@
   <scroll-view scroll-y class="poll-content" style="margin-top: {{pageTopy}};">
     <view class="poll-header">
       <view class="description" wx:if="{{poll.description}}">{{poll.description}}</view>
-      <view class="poll-meta" wx:if="{{poll && poll.createTimeStr && poll.endTimeStr}}">
-        <text class="meta-item">创建时间：{{poll.createTimeStr}}</text>
-        <text class="meta-item">截止时间：{{poll.endTimeStr}}</text>
+      <view class="poll-meta-container">
+        <view class="poll-meta" wx:if="{{poll && poll.createTimeStr && poll.endTimeStr}}">
+          <text class="meta-item">创建时间：{{poll.createTimeStr}}</text>
+          <text class="meta-item">截止时间：{{poll.endTimeStr}}</text>
+        </view>
+        <view class="poll-status" wx:if="{{poll}}">
+          <text wx:if="{{isExpired}}" class="expired-tag">投票已结束</text>
+          <text wx:elif="{{hasVoted}}" class="voted-tag">已完成投票</text>
+          <text wx:else class="not-voted-tag">未完成投票</text>
+        </view>
       </view>
     </view>
     <block wx:if="{{loading}}">
@@ -23,14 +30,9 @@
       </view>
     </block>
     <block wx:elif="{{poll}}">
-      <view class="poll-status">
-        <text wx:if="{{isExpired}}" class="expired-tag">投票已结束</text>
-        <text wx:elif="{{hasVoted}}" class="voted-tag">已完成投票</text>
-        <text wx:else class="not-voted-tag">未完成投票</text>
-      </view>
       <view class="poll-options">
         <block wx:for="{{poll.sortedOptions}}" wx:key="originalIndex">
-          <view class="option {{hasVoted || isExpired ? 'disabled' : 'can-vote'}}" data-original-index="{{item.originalIndex}}" hover-class="{{(!hasVoted && !isExpired) ? 'option-hover' : ''}}" bindtap="{{(!hasVoted && !isExpired) ? 'submitVote' : ''}}">
+          <view class="option">
             <view class="option-background" style="opacity: {{calculateVotePercentage(item) === '0%' ? 0 : (parseFloat(calculateVotePercentage(item)) / 100) * 0.3}}"></view>
             <view class="option-content">
               <text class="option-text">{{item.text}}</text>
@@ -49,6 +51,43 @@
   </scroll-view>
   <!-- 底部tabbar -->
   <view class="toggle-container">
-    <button class="toggle-button" open-type="share">邀请好友投票</button>
+    <view class="tab-item" bindtap="deletePoll">
+      <image src="/images/detail/del.svg" class="tab-icon"></image>
+      <text class="tab-text">删除</text>
+    </view>
+    <view class="tab-item" bindtap="showVoteDialog">
+      <image src="/images/detail/poll.svg" class="tab-icon"></image>
+      <text class="tab-text">投票</text>
+    </view>
+    <view class="tab-item" bindtap="copyPollResult">
+      <image src="/images/detail/copy.svg" class="tab-icon"></image>
+      <text class="tab-text">复制结果</text>
+    </view>
+    <button class="tab-item share-button" open-type="share">
+      <image src="/images/detail/share.svg" class="tab-icon"></image>
+      <text class="tab-text">邀请投票</text>
+    </button>
+  </view>
+  <!-- 投票弹窗 -->
+  <view class="vote-modal" wx:if="{{showVoteModal}}">
+    <view class="vote-modal-mask" bindtap="closeVoteDialog"></view>
+    <view class="vote-modal-content">
+      <view class="vote-modal-header">
+        <text class="vote-modal-title">请选择投票选项</text>
+      </view>
+      <view class="vote-modal-options">
+        <block wx:for="{{poll.sortedOptions}}" wx:key="originalIndex">
+          <view class="vote-modal-option {{selectedOption === item.originalIndex ? 'selected' : ''}}" 
+                bindtap="selectOption" 
+                data-original-index="{{item.originalIndex}}">
+            <text>{{item.text}}</text>
+          </view>
+        </block>
+      </view>
+      <view class="vote-modal-footer">
+        <button class="vote-modal-cancel" bindtap="closeVoteDialog">取消</button>
+        <button class="vote-modal-confirm" bindtap="confirmVote" disabled="{{selectedOption === null}}">确认投票</button>
+      </view>
+    </view>
   </view>
 </view>

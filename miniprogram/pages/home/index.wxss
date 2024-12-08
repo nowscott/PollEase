@@ -20,7 +20,9 @@
 .title-content {
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 0 24rpx;
   position: relative;
 }
@@ -33,22 +35,18 @@
 }
 
 .toggle-container {
-  display: flex;
-  justify-content: space-between;
+  display: inline-flex;
+  justify-content: center;
   align-items: center;
   background-color: var(--btnColor);
   border-radius: 16rpx;
   overflow: hidden;
   box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
   height: 80%;
-  position: relative;
-  width: 100%;
 }
 
 .toggle-button {
-  flex: 1;
-  text-align: center;
-  padding: 8rpx 20rpx;
+  padding: 8rpx 32rpx;
   font-size: var(--font-normal);
   color: #fff;
   font-weight: bold;
@@ -56,6 +54,7 @@
   position: relative;
   z-index: 1;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .toggle-button.selected::before {

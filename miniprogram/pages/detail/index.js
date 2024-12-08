@@ -9,7 +9,9 @@ Page({
     error: null,
     hasVoted: false,
     isExpired: false,
-    openid: ''
+    openid: '',
+    showVoteModal: false,  // 添加投票弹窗状态
+    selectedOption: null   // 添加选中选项状态
   },
 
   onLoad(options) {
@@ -37,9 +39,7 @@ Page({
     // 从本地存储获取投票状态
     const votedPolls = wx.getStorageSync('votedPolls') || {}
     const hasVoted = !!votedPolls[pollId]
-
     this.setData({ hasVoted })
-
     // 确保云开发环境初始化
     if (!wx.cloud) {
       wx.cloud.init({
@@ -61,12 +61,10 @@ Page({
         poll: null,       // 清空投票数据
         loading: true     // 显示加载状态
       });
-
       // 重新获取数据
       this.initPageData();
     }
   },
-
   // 修改 initPageData 方法，确保每次都重新获取投票状态
   async initPageData() {
     try {
@@ -368,5 +366,136 @@ Page({
         url: '/pages/home/index' // 请确保此路径为首页路径
       });
     }
-  }
+  },
+
+  // 显示投票对话框
+  showVoteDialog() {
+    if (this.data.hasVoted) {
+      wx.showToast({
+        title: '您已经投过票了',
+        icon: 'none'
+      })
+      return
+    }
+    if (this.data.isExpired) {
+      wx.showToast({
+        title: '投票已结束',
+        icon: 'none'
+      })
+      return
+    }
+    this.setData({
+      showVoteModal: true
+    })
+  },
+
+  // 关闭投票对话框
+  closeVoteDialog() {
+    this.setData({
+      showVoteModal: false,
+      selectedOption: null
+    })
+  },
+
+  // 选择投票选项
+  selectOption(e) {
+    const { originalIndex } = e.currentTarget.dataset
+    this.setData({
+      selectedOption: originalIndex
+    })
+  },
+
+  // 确认投票
+  async confirmVote() {
+    if (this.data.selectedOption === null) {
+      wx.showToast({
+        title: '请选择一个选项',
+        icon: 'none'
+      })
+      return
+    }
+    await this.submitVote({
+      currentTarget: {
+        dataset: {
+          originalIndex: this.data.selectedOption
+        }
+      }
+    })
+    this.closeVoteDialog()
+  },
+
+  // 复制投票结果
+  copyPollResult() {
+    if (!this.data.poll) {
+      wx.showToast({
+        title: '暂无投票数据',
+        icon: 'none'
+      })
+      return
+    }
+
+    const poll = this.data.poll
+    let resultText = `标题：${poll.title}\n`
+    
+    if (poll.description) {
+      resultText += `描述：${poll.description}\n`
+    }
+    
+    resultText += `\n总投票人数：${poll.voterCount || 0}人\n\n投票选项：\n`
+    
+    poll.sortedOptions.forEach((option, index) => {
+      const percentage = this.calculateVotePercentage(option)
+      resultText += `${index + 1}. ${option.text}：${option.votes}票 (${percentage})\n`
+    })
+
+    wx.setClipboardData({
+      data: resultText,
+      success: () => {
+        wx.showToast({
+          title: '投票结果已复制',
+          icon: 'success'
+        })
+      },
+      fail: () => {
+        wx.showToast({
+          title: '复制失败',
+          icon: 'error'
+        })
+      }
+    })
+  },
+
+  // 删除投票
+  deletePoll() {
+    wx.showModal({
+      title: '确认删除',
+      content: '确定要删除这个投票吗？此操作不可恢复。',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            await wx.cloud.callFunction({
+              name: 'deletePoll',
+              data: {
+                pollId: this.data.pollId
+              }
+            })
+            wx.showToast({
+              title: '删除成功',
+              icon: 'success',
+              success: () => {
+                setTimeout(() => {
+                  wx.navigateBack()
+                }, 1500)
+              }
+            })
+          } catch (error) {
+            wx.showToast({
+              title: '删除失败',
+              icon: 'error'
+            })
+          }
+        }
+      }
+    })
+  },
 })
