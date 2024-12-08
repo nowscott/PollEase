@@ -27,11 +27,26 @@
   position: relative;
 }
 
-.title-text {
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.refresh-btn {
   position: absolute;
   left: 24rpx;
-  font-size: var(--font-xlarge);
-  font-weight: 600;
+  width: 48rpx;
+  height: 48rpx;
+  padding: 8rpx;
+  transition: transform 0.3s ease;
+}
+
+.refresh-btn.refreshing {
+  animation: rotate 1s linear infinite;
 }
 
 .toggle-container {

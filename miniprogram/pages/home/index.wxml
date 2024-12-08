@@ -5,7 +5,7 @@
   <!-- 标题区域 -->
   <view class="title" style="padding-top: {{statusBarHeight}};height: {{titleBarHeight}};">
     <view class="title-content">
-      <text class="title-text">主页</text>
+      <image src="/images/home/refresh.svg" class="refresh-btn {{isRefreshing ? 'refreshing' : ''}}" bindtap="onRefreshTap"></image>
       <view class="toggle-container">
         <view class="toggle-button {{selected === 'initiated' ? 'selected' : ''}}" bindtap="selectInitiated">
           我发起的

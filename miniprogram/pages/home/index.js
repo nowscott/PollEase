@@ -10,6 +10,7 @@ Page({
     openid: '',
     selected: 'initiated',
     needRefresh: false,
+    isRefreshing: false
   },
 
   onLoad() {
@@ -178,5 +179,32 @@ Page({
     this.setData({ selected: 'joined' });
     const cacheData = wx.getStorageSync('pollCache') || { initiatedData: [], joinedData: [] };
     this.processPollData(cacheData);
+  },
+
+  // 处理刷新按钮点击
+  async onRefreshTap() {
+    if (this.data.isRefreshing) return;
+    
+    this.setData({ isRefreshing: true });
+    wx.showLoading({
+      title: '刷新中...',
+    });
+
+    try {
+      const pollStorage = this.selectComponent('#pollStorage');
+      if (!pollStorage) {
+        throw new Error('pollStorage 组件未找到');
+      }
+
+      // 同步发起和参与的投票
+      await Promise.all([pollStorage.syncInitiated(), pollStorage.syncjoined()]);
+      const cacheData = wx.getStorageSync('pollCache') || { initiatedData: [], joinedData: [] };
+      this.processPollData(cacheData);
+    } catch (err) {
+      console.error('刷新失败:', err);
+    } finally {
+      wx.hideLoading();
+      this.setData({ isRefreshing: false });
+    }
   },
 });

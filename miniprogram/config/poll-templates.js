@@ -12,17 +12,17 @@ export const pollTemplates = {
     {
       id: 'milktea',
       template: {
-        title: '喝点什么吧',
-        description: '一起来选择喝什么奶茶吧',
+        title: '喝点什么呢',
+        description: '一起选择喝什么吧',
         options: [
-          '喜茶',
-          '奈雪的茶',
-          '蜜雪冰城',
+          '密雪冰城',
+          '益和堂',
+          '古茗',
           '茶百道',
           'COCO都可',
           '一点点',
-          '书亦烧仙草',
-          '古茗'
+          '邻里柠檬茶',
+          '茶救星球'
         ],
         multiSelect: true
       }
@@ -34,14 +34,12 @@ export const pollTemplates = {
         description: '一起来选择吃什么吧',
         options: [
           '海底捞火锅',
-          '外婆家',
-          '韩式烤肉',
+          '肯德基',
           '汉堡王',
           '真功夫',
-          '肯德基',
           '麦当劳',
           '必胜客',
-          '永和大王',
+          '烤肉',
           '吉野家'
         ],
         multiSelect: false
